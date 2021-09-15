@@ -1,0 +1,41 @@
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+body {
+    display: block;
+    width: 400px;
+    height: 250px;
+    border: 1px solid black;
+    border-radius: 25px;
+    margin: auto;
+    padding: 20px;
+}
+
+button {
+    font-size: 1.25em;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+div {
+    margin-bottom: 10px;
+}
+
+div.result {
+    width: 125px;
+    height: 50px;
+    background-color: lightgrey;
+    border: black solid 1px;
+    border-radius: 0.25em;
+}
+
+div.result > h2 {
+    margin: 0;
+    text-align: center;
+    line-height: 50px;
+}
