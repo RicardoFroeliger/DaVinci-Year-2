@@ -86,4 +86,4 @@ The rest of the checksum 168 is integer divided by the remainder 7 = 0, so "0686
 
 5. Refactor the code
     Improve the quality of your code.<br>
-    And repeat steps 4, 5, 6 and 7 until you are completely satisfied.
+    And repeat steps 4 and 5 until you are completely satisfied.
