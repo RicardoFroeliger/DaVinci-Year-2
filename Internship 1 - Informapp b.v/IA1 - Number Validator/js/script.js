@@ -4,15 +4,14 @@ let submit = document.querySelector('button[type="submit"]');
 let result = document.querySelector('#result');
 
 function validateNumber(number, remainder) {
-    if(typeof number != 'string') return false;
+    if (typeof number != 'string') return false;
 
-    remainder = parseInt(remainder);
     number = number.replace(/\D/g, '').split('').reverse();
 
-    if(number.length < 6 || number.length > 14) return false;
+    if (number.length < 6 || number.length > 14) return false;
 
     let total = number.reduce((ttl, num, idx) => ttl + (idx + 1) * num, 0);
-    return total % remainder == 0;
+    return total % parseInt(remainder) == 0;
 }
 
 submit.onclick = () => {
@@ -22,6 +21,6 @@ submit.onclick = () => {
 }
 
 // let total = 0; /* checksum calculating alternative */
-// for(let i = 1; i <= number.length; i++) {
+// for (let i = 1; i <= number.length; i++) {
 //     total += i * number[i - 1];
 // }

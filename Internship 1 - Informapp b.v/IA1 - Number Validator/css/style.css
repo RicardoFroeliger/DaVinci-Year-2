@@ -1,29 +1,48 @@
 * {
     font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-h1 {
+h1, footer {
+    margin: 10px;
     text-align: center;
 }
 
-body {
+div.main {
     display: block;
     width: 400px;
     height: 250px;
+    
     border: 1px solid black;
     border-radius: 25px;
-    margin: auto;
     padding: 20px;
+    margin: 0;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-button {
+input, select, button { 
+    border: 1px solid grey;
+    border-radius: 0.15em;
+    padding: 2px;
+}
+
+div:not(:last-of-type) {
+    margin-bottom: 15px;
+}
+
+button[type="submit"] {
     font-size: 1.25em;
     width: 100%;
     margin-bottom: 10px;
 }
-
-div {
-    margin-bottom: 10px;
+button[type="submit"]:hover {
+    background-color: lightgrey;
+    cursor: pointer;
 }
 
 div.result {
@@ -32,8 +51,8 @@ div.result {
     background-color: lightgrey;
     border: black solid 1px;
     border-radius: 0.25em;
+    margin: 0;
 }
-
 div.result > h2 {
     margin: 0;
     text-align: center;
