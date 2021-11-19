@@ -21,7 +21,7 @@ Create smart, compact, readable code with the following requirements:
 
 ### Assignment 2
 Each button now toggles other buttons defined in the combinations array.<br>
-The page also shows whether everything is set to Yes, No.<br>
+The page also shows whether everything is set to Yes or No.<br>
 Create smart, compact, readable code with the following requirements:
 
 * Create the page as in Yes or No assignment 1. 
