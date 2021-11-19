@@ -13,7 +13,6 @@ Think of driver's licenses, permits, vaccination certificates, etc.<br>
 Errors in the registration of those numbers naturally cause big problems.
 
 
-
 ### Validation
 Each of those numbers is made up of digits, sometimes separated by spaces, periods or other characters.<br>
 The combination of digits must meet certain checksum requirements.<br>
@@ -25,7 +24,6 @@ Let's take as an example the number: "06862589" for a medical access pass.<br>
 In this example, the remainder 7 applies to this type of access pass.<br>
 Such an operator is also called remainder.
 
- 
 
 ### Calculate checksum
 First, the checksum is calculated as:<br>
