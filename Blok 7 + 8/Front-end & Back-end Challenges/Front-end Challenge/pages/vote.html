@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="../js/data.js" defer></script>
+    <script src="../js/script.js" defer></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Front-end Challenge</title>
+</head>
+
+<body>
+
+    <button class="w3-button w3-grey" onclick="clickBackButton()">Terug</button>
+    <h1 class="counter"></h1>
+
+    <div class="statementContainer">
+        <h1 class="title">Missing Title</h1>
+        <h1 class="statement">There should be a statement here</h1>
+
+        <div class="statementButtonContainer">
+            <input class="w3-button w3-grey" type="button" value="Wat vinden de partijen?" onclick="togglePartyOpinions()">
+            <input class="w3-button w3-grey" type="button" value="Meer weten" onclick="">
+        </div>
+
+        <div class="moreInfoContainer">
+            
+        </div>
+    </div>
+
+    <div class="buttonContainer">
+        <div>
+            <input class="w3-button w3-green" type="button" value="Eens" onclick="clickVoteButton('pro')">
+            <input class="w3-button w3-grey" type="button" value="Geen van beide" onclick="clickVoteButton('none')">
+            <input class="w3-button w3-red" type="button" value="Oneens" onclick="clickVoteButton('contra')">
+            <input class="w3-button w3-black" type="button" value="Overslaan" onclick="clickSkipButton()">
+        </div>
+    </div>
+</body>
+
+</html>

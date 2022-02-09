@@ -8,32 +8,20 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src="./js/data.js" defer></script>
     <script src="./js/script.js" defer></script>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
     <title>Front-end Challenge</title>
 </head>
 
-<body>
-
-    <div class="startContainer">
-        <button class="w3-button w3-blue" onclick="start()">Start</button>
-    </div>
-
-    <div class="voteContainer" style="display: none;">
-        <div class="statementContainer">
-            <h1 class="title"></h1>
-            <h3 class="statement"></h3>
-        </div>
-
-        <div class="buttonContainer">
-            <div>
-                <input class="w3-button w3-black" type="button" value="Terug" onclick="clickBackButton()">
-                <input class="w3-button w3-green" type="button" value="Eens" onclick="clickVoteButton('pro')">
-                <input class="w3-button w3-grey" type="button" value="Geen van beide" onclick="clickVoteButton('none')">
-                <input class="w3-button w3-red" type="button" value="Oneens" onclick="clickVoteButton('contra')">
-                <input class="w3-button w3-black" type="button" value="Overslaan" onclick="clickSkipButton()">
-            </div>
+<body class="background">
+    <div class="background">
+        <div class="startContainer">
+            <img src="https://tweedekamer2021.stemwijzer.nl/gfx/img/votematch_applogo.svg" alt="Logo Stemwijzer">
+            <h1>Tweede Kamerverkiezingen 2021</h1>
+            <h2>Test je politieke voorkeur aan de hand van 30 stellingen</h2>
+            <button onclick="window.location = './pages/vote.html'">Start</button>
         </div>
     </div>
+
 </body>
 
 </html>

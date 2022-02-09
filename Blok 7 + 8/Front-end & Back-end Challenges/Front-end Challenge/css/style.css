@@ -3,51 +3,95 @@
     padding: 0;
 }
 
-body {
+body.background {
     background-image: url('https://tweedekamer2021.stemwijzer.nl/gfx/img/background.jpg');
     background-repeat: no-repeat;
     background-size: cover;
 }
 
-.startContainer {
+h1.counter {
+    float: right;
+    padding: 0 50px;
+}
+
+div.startContainer {
     background-color: white;
-    width: 40%;
-    height: 50vh;
+    padding: 50px;
+    width: 50%;
+    height: 70vh;
     border-radius: 15px;
+
     position: relative;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, 50%);
+    transform: translate(-50%, 20%);
 }
-
-.startContainer button {
-    width: 40%;
-    height: 30%;
-    position: relative;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+div.startContainer h1 {
+    font-weight: bold;
+    font-size: 2.25em;
 }
+div.startContainer h2 {
+    font-size: 1.4em;
+}
+div.startContainer button {
+    background-color: #233fff;
+    border: 5px solid transparent;
+    border-radius: 15px;
+    padding: 25px 100px;
+    
+    color: white;
+    font-weight: bold;
+    font-size: 25px;
+    line-height: 100%;
 
+    cursor: pointer;
+    transition: all .15s;
 
-.statementContainer {
-    width: 60%;
-
-    position: relative;
+    position: absolute;
+    top: 65%;
     left: 50%;
     transform: translateX(-50%);
 }
+div.startContainer button:hover {
+    background-color: #001eef;
+}
 
-.buttonContainer {
+
+div.statementContainer {
+    width: 70%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 400px;
+}
+
+h1.title {
+    color: #233fff;
+    font-weight: 700 
+    
+}
+h1.statement {
+    font-weight: 500;
+}
+
+div.moreInfoContainer {
+    width: 100%;
+    background-color: grey;
+    height: 700px;
+    border-radius: 0 15px 15px 15px;
+}
+
+
+div.buttonContainer {
     position: fixed;
     width: 100%;
     height: 125px;
-    background-color: mediumspringgreen;
+    background-color: white;
     top: calc(100vh - 125px);
 }
-.buttonContainer > div {
+div.buttonContainer > div {
     display: flex;
-    width: 50%;
+    width: 70%;
     justify-content: space-around;
 
     position: relative;
@@ -55,5 +99,30 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
 }
-/* .buttonContainer input[type="button"] {
-} */
+
+
+
+.option::before {
+    top: 12px;
+    left: 8px;
+    transform: scale(.45);
+    width: 24px;
+    height: 24px;
+    border-radius: 24px;
+}
+.option > .checkbox {
+    width: 12px;
+    height: 12px;
+    background-color: grey;
+}
+
+.importanceContainer {
+    /* background-color: white;
+    width: 40%;
+    height: 50vh;
+    border-radius: 15px;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, 50%); */
+}
