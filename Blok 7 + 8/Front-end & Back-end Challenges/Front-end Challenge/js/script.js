@@ -1,14 +1,16 @@
+let frontPage = document.querySelector('.startContainer h2');
 let title = document.querySelector('.title');
 let statement = document.querySelector('.statement');
 let counter = document.querySelector('.counter');
 let subjectIndex = 0, answers = [];
 
-// subjects = [subjects[0], subjects[1], subjects[2]];
+subjects = [subjects[0], subjects[1], subjects[2]];
 
 function updateStatement() {
-    counter.innerHTML = `${subjectIndex + 1}/${subjects.length}`;
-    title.innerHTML = subjects[subjectIndex].title;
-    statement.innerHTML = subjects[subjectIndex].statement;
+    if (frontPage) frontPage.innerHTML += ` aan de hand van ${subjects.length} stellingen`;
+    if (title) title.innerHTML = subjects[subjectIndex].title;
+    if (statement) statement.innerHTML = subjects[subjectIndex].statement;
+    if (counter) counter.innerHTML = `${subjectIndex + 1}/${subjects.length}`;
 }
 updateStatement();
 
@@ -36,10 +38,6 @@ function generateImportanceCheckboxes() {
     document.body.appendChild(container);
 }
 
-function togglePartyOpinions() {
-    
-}
-
 function clickVoteButton(opinion) {
     subjectIndex++;
     answers.push({ subject: subjectIndex - 1, opinion });
@@ -60,13 +58,28 @@ function clickBackButton() {
 
 
 function validateAnswers() {
+    // Reset Matches to 0
+    parties.map(p => p.match = 0);
+
+    // Check if There are Enough Usable Answers
+    // let usableAnswers = answers.filter(a => a.opinion != 'none').length;
+    // if(usableAnswers < Math.ceil(subjects.length / 2))
+
+    // for (let answer of answers) {
+    //     for (let party of subjects[answer.subject].parties) {
+
+    //         if (answer.opinion != 'none' && party.position != 'none') {
+    //             let targetParty = parties.find(p => p.name == party.name);
+
+    //             if (party.position == answer.opinion) targetParty.match++
+    //             else targetParty.match--;
+    //         }
+    //     }
+    // }
+    // let sortedParties = parties.sort((a, b) => b.match - a.match);
 
     window.location = './importance.html';
-    // if(answers)
-    // else 
-    // toggleImportanceScreen();
 }
-
 
 // function calculateMatchingParties() {
 //     let matchingParties = [];
