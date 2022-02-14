@@ -1,95 +1,149 @@
+let currentPage = 0;
 let subjectIndex = 0;
-let answers = [];
+let answers = {}
 
-let urlParams = new URLSearchParams(window.location.search);
-if (urlParams.get('statement')) subjectIndex = parseInt(urlParams.get('statement'));
+subjects = [subjects[0], subjects[1], subjects[2]];
 
-// subjects = [subjects[0], subjects[1], subjects[2]];
+function showPage(page) {
+    let containers = ['.startContainer', '.statementContainer', '.importanceContainer'];
+    currentPage = page;
+
+    // Hide all containers and only make the one needed visible
+    containers.map(c => document.querySelector(c).style.display = 'none');
+    document.querySelector(containers[page]).style.display = 'block';
+
+
+    // Special containers that only need to be on one page
+    document.body.className = page == 0 ? 'background' : '';
+    document.querySelector('.buttonContainer').style.display = page == 1 ? 'block' : 'none';
+    document.querySelector('h1.counter').style.display = page == 1 ? 'inline-block' : 'none';
+    document.querySelector('button.back').style.display = page != 0 ? 'inline-block' : 'none';
+
+}
+showPage(0);
+
+
 
 function updateStatement() {
     document.querySelector('.title').innerHTML = subjects[subjectIndex].title;
     document.querySelector('.statement').innerHTML = subjects[subjectIndex].statement;
     document.querySelector('.counter').innerHTML = `${subjectIndex + 1}/${subjects.length}`;
 }
+updateStatement();
 
-function generateCheckboxes() {
+
+
+/* ---- Back Button ---- */
+function clickBackButton() {
+    if (!subjects[subjectIndex - 1]) return showPage(0);
+    if (currentPage != 1) return showPage(currentPage - 1);
+
+    subjectIndex--;
+    updateStatement();
+}
+
+
+
+/* -------- Vote Page -------- */
+function clickVoteButton(answer) {
+    // (Over)write the answer when clicked
+    answers[`subject_${subjectIndex}`] = answer;
+
+    if (!subjects[subjectIndex + 1]) return validateAnswers();
+    subjectIndex++;
+    updateStatement();
+}
+function clickSkipButton() {
+    // Clear a possible earlier answer when clicked
+    delete answers[`subject_${subjectIndex}`];
+
+    if (!subjects[subjectIndex + 1]) return validateAnswers();
+    subjectIndex++;
+    updateStatement();
+}
+
+function validateAnswers() {
+    // Check if there are more than 50% of the statements are answered
+    let enoughAnswers = Object.values(answers).length > Math.floor(subjects.length / 2);
+
+
+    // Show error and hide checkboxes if not enough answers
+    document.querySelector('.errorContainer').style.display = enoughAnswers ? 'none' : 'block';
+    document.querySelector('.impCheckboxContainer').style.display = enoughAnswers ? 'block' : 'none'
+
+
+    // Disable button if not enough answers
+    if (enoughAnswers) document.querySelector('.importanceButton').removeAttribute('disabled');
+    else document.querySelector('.importanceButton').setAttribute('disabled', '');
+
+    showPage(2);
+}
+
+
+
+/* --------- Importance Page --------- */
+function generateImportanceCheckboxes() {
     let columns = [];
     for (let [i, subject] of subjects.entries()) {
 
+        // Create column containers for the checkboxes
         let colDiv = document.createElement('div');
         colDiv.style.display = 'inline-block';
         if (i % 10 == 0) columns.push(colDiv);
 
+
+        // Create and style checkboxes
         let div = document.createElement('div');
         let input = document.createElement('input');
         let label = document.createElement('label');
 
         input.type = 'checkbox';
         input.id = `subject${i}`;
-        input.onclick = () => clickCheckbox();
-
         label.setAttribute('for', `subject${i}`);
-        label.innerHTML = ` ${subject.title}`;
+        label.innerText = ` ${subject.title}`;
 
+
+        // Append the checkboxes to the column and body
         div.appendChild(input);
         div.appendChild(label);
-
         columns[columns.length - 1].appendChild(div);
 
-        let checkboxContainer = document.querySelector('.checkboxContainer');
-        if (i % 10 == 0) checkboxContainer.appendChild(columns[columns.length - 1]);
+        let container = document.querySelector('.impCheckboxContainer');
+        if (i % 10 == 0) container.appendChild(columns[columns.length - 1]);
     }
 }
 
-
-
-function clickVoteButton(opinion) {
-    subjectIndex++;
-    answers.push({ subject: subjectIndex - 1, opinion });
-    if (!subjects[subjectIndex]) return validateAnswers();
-    updateStatement();
-}
-function clickSkipButton() {
-    subjectIndex++;
-    if (!subjects[subjectIndex]) return validateAnswers();
-    updateStatement();
-}
-function clickBackButton() {
-    subjectIndex--;
-    if (!subjects[subjectIndex]) return window.location = '../index.html';
-    updateStatement();
-}
-function clickCheckbox() {
-    let checkboxes = document.querySelectorAll('.checkboxContainer input');
-    let checkedBoxes = [...checkboxes].filter(c => c.checked);
-    console.log(checkedBoxes.length)
+function validateImportanceCheckboxes() {
+    let checkboxes = document.querySelectorAll('.impCheckboxContainer input');
+    let checked = [...checkboxes].filter(c => c.checked);
+    console.log(checked);
 }
 
 
 
-function validateAnswers() {
-    // Reset Matches to 0
-    parties.map(p => p.match = 0);
+// function validateAnswers() {
+//     // Reset Matches to 0
+//     parties.map(p => p.match = 0);
 
-    // Check if There are Enough Usable Answers
-    // let usableAnswers = answers.filter(a => a.opinion != 'none').length;
-    // if(usableAnswers < Math.ceil(subjects.length / 2))
+//     // Check if There are Enough Usable Answers
+//     // let usableAnswers = answers.filter(a => a.opinion != 'none').length;
+//     // if(usableAnswers < Math.ceil(subjects.length / 2))
 
-    // for (let answer of answers) {
-    //     for (let party of subjects[answer.subject].parties) {
+//     // for (let answer of answers) {
+//     //     for (let party of subjects[answer.subject].parties) {
 
-    //         if (answer.opinion != 'none' && party.position != 'none') {
-    //             let targetParty = parties.find(p => p.name == party.name);
+//     //         if (answer.opinion != 'none' && party.position != 'none') {
+//     //             let targetParty = parties.find(p => p.name == party.name);
 
-    //             if (party.position == answer.opinion) targetParty.match++
-    //             else targetParty.match--;
-    //         }
-    //     }
-    // }
-    // let sortedParties = parties.sort((a, b) => b.match - a.match);
+//     //             if (party.position == answer.opinion) targetParty.match++
+//     //             else targetParty.match--;
+//     //         }
+//     //     }
+//     // }
+//     // let sortedParties = parties.sort((a, b) => b.match - a.match);
 
-    window.location = './importance.html';
-}
+//     window.location = './importance.html';
+// }
 
 // function calculateMatchingParties() {
 //     let matchingParties = [];

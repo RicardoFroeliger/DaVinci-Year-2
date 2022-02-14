@@ -7,21 +7,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src="./js/data.js" defer></script>
+    <script src="./js/script.js" defer></script>
     <link rel="stylesheet" href="./css/style.css">
     <title>Front-end Challenge</title>
 </head>
 
 <body class="background">
-    <script defer>
-        window.onload = () => document.querySelector('.startContainer h2').innerHTML +=
-            ` aan de hand van ${subjects.length} stellingen`;
-    </script>
 
+    <!-- Main Start Page -->
     <div class="container startContainer">
         <img src="https://tweedekamer2021.stemwijzer.nl/gfx/img/votematch_applogo.svg" alt="Logo Stemwijzer">
         <h1>Tweede Kamerverkiezingen 2021</h1>
         <h2>Test je politieke voorkeur</h2>
-        <button onclick="window.location = './pages/vote.html'">Start</button>
+        <button class="mainButton" onclick="showPage(1)">Start</button>
+
+
+        <!-- NOT WORKING YET -->
+        <script defer>
+            window.onload = () => {
+                return document.querySelector('.startContainer h2').innerHTML +=
+                    ` aan de hand van ${subjects.length} stellingen`;
+            }
+        </script>
+    </div>
+
+
+
+    <!-- Back button  -->
+    <button class="back w3-button w3-grey" onclick="clickBackButton()">Terug</button>
+    
+
+
+    <!-- Voting Page -->
+    <h1 class="counter"></h1>
+
+    <div class="container statementContainer">
+        <div>
+            <h1 class="title">Missing Title</h1>
+            <h1 class="statement">There should be a statement here</h1>
+        </div>
+    </div>
+
+    <div class="buttonContainer">
+        <div>
+            <input class="w3-button w3-green" type="button" value="Eens" onclick="clickVoteButton('pro')">
+            <input class="w3-button w3-grey" type="button" value="Geen van beide" onclick="clickVoteButton('none')">
+            <input class="w3-button w3-red" type="button" value="Oneens" onclick="clickVoteButton('contra')">
+            <input class="w3-button w3-black" type="button" value="Overslaan" onclick="clickSkipButton()">
+        </div>
+    </div>
+
+
+
+    <!-- Importance Page -->
+    <div class="importanceContainer container">
+        <div class="impTextContainer">
+            <h1 class="title" style="color: black">Zijn er onderwerpen die je extra belangrijk vindt?</h1>
+            <button class="mainButton importanceButton" onclick="validateImportanceCheckboxes()">Volgende stap</button>
+        </div>
+
+        <div class="errorContainer" style="display: none;">
+            <h1>Je hebt teveel stellingen overgeslagen</h1>
+            <h2>
+                We hebben minimaal 15 antwoorden nodig om je een resultaat te kunnen geven.<br>
+                Ga terug om je mening te geven bij de stellingen.
+            </h2>
+        </div>
+
+        <div class="impCheckboxContainer"></div>
+        <script defer>window.onload = () => generateImportanceCheckboxes()</script>
     </div>
 </body>
 
