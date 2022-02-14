@@ -1,31 +1,32 @@
-let frontPage = document.querySelector('.startContainer h2');
-let title = document.querySelector('.title');
-let statement = document.querySelector('.statement');
-let counter = document.querySelector('.counter');
-let subjectIndex = 0, answers = [];
+let subjectIndex = 0;
+let answers = [];
 
-subjects = [subjects[0], subjects[1], subjects[2]];
+let urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('statement')) subjectIndex = parseInt(urlParams.get('statement'));
+
+// subjects = [subjects[0], subjects[1], subjects[2]];
 
 function updateStatement() {
-    if (frontPage) frontPage.innerHTML += ` aan de hand van ${subjects.length} stellingen`;
-    if (title) title.innerHTML = subjects[subjectIndex].title;
-    if (statement) statement.innerHTML = subjects[subjectIndex].statement;
-    if (counter) counter.innerHTML = `${subjectIndex + 1}/${subjects.length}`;
+    document.querySelector('.title').innerHTML = subjects[subjectIndex].title;
+    document.querySelector('.statement').innerHTML = subjects[subjectIndex].statement;
+    document.querySelector('.counter').innerHTML = `${subjectIndex + 1}/${subjects.length}`;
 }
-updateStatement();
 
-
-function generateImportanceCheckboxes() {
-    let container = document.createElement('div');
-    container.className = 'importanceContainer';
-
+function generateCheckboxes() {
+    let columns = [];
     for (let [i, subject] of subjects.entries()) {
+
+        let colDiv = document.createElement('div');
+        colDiv.style.display = 'inline-block';
+        if (i % 10 == 0) columns.push(colDiv);
+
         let div = document.createElement('div');
         let input = document.createElement('input');
         let label = document.createElement('label');
 
         input.type = 'checkbox';
         input.id = `subject${i}`;
+        input.onclick = () => clickCheckbox();
 
         label.setAttribute('for', `subject${i}`);
         label.innerHTML = ` ${subject.title}`;
@@ -33,10 +34,14 @@ function generateImportanceCheckboxes() {
         div.appendChild(input);
         div.appendChild(label);
 
-        container.appendChild(div);
+        columns[columns.length - 1].appendChild(div);
+
+        let checkboxContainer = document.querySelector('.checkboxContainer');
+        if (i % 10 == 0) checkboxContainer.appendChild(columns[columns.length - 1]);
     }
-    document.body.appendChild(container);
 }
+
+
 
 function clickVoteButton(opinion) {
     subjectIndex++;
@@ -53,6 +58,11 @@ function clickBackButton() {
     subjectIndex--;
     if (!subjects[subjectIndex]) return window.location = '../index.html';
     updateStatement();
+}
+function clickCheckbox() {
+    let checkboxes = document.querySelectorAll('.checkboxContainer input');
+    let checkedBoxes = [...checkboxes].filter(c => c.checked);
+    console.log(checkedBoxes.length)
 }
 
 
@@ -119,3 +129,9 @@ function validateAnswers() {
 //     }
 // }
 // console.log(parties.map(p => p.match))
+
+// if(checkedBoxes.length > 2) {
+//     document.querySelector('.importanceContainer button').removeAttribute('disabled');
+// } else {
+//     document.querySelector('.importanceContainer button').setAttribute('disabled', '');
+// }

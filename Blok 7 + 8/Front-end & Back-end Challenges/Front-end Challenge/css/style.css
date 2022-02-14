@@ -9,6 +9,14 @@ body.background {
     background-size: cover;
 }
 
+div.container {
+    width: 70%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100vh;
+}
+
 h1.counter {
     float: right;
     padding: 0 50px;
@@ -20,9 +28,6 @@ div.startContainer {
     width: 50%;
     height: 70vh;
     border-radius: 15px;
-
-    position: relative;
-    left: 50%;
     top: 50%;
     transform: translate(-50%, 20%);
 }
@@ -59,13 +64,7 @@ div.importanceContainer button:hover {
 
 
 
-div.statementContainer,
-div.importanceContainer,
-div.errorContainer {
-    width: 70%;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
+div.statementContainer {
     height: 115vh;
 }
 div.statementContainer > div {
@@ -73,6 +72,9 @@ div.statementContainer > div {
     top: 30%;
     transform: translateY(-30%);
 }
+
+
+
 div.importanceContainer h1 {
     width: 65%;
     display: inline-block;
@@ -107,6 +109,11 @@ div.errorContainer h2 {
     font-size: 20px;
 }
 
+div.checkboxContainer {
+    display: flex;
+    align-items: right;
+    justify-content: space-between;
+}
 
 
 h1.title {
