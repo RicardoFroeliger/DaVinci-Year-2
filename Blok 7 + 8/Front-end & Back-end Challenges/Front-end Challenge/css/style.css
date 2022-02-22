@@ -3,6 +3,10 @@
     padding: 0;
 }
 
+.w3-button {
+    border-radius: 10px;
+}
+
 body.background {
     background-image: url('https://tweedekamer2021.stemwijzer.nl/gfx/img/background.jpg');
     background-repeat: no-repeat;
@@ -147,4 +151,8 @@ div.impCheckboxContainer {
     display: flex;
     align-items: right;
     justify-content: space-between;
+}
+
+div.impCheckboxContainer label {
+    user-select: none;
 }

@@ -2,7 +2,7 @@ let currentPage = 0;
 let subjectIndex = 0;
 let answers = {}
 
-subjects = [subjects[0], subjects[1], subjects[2]];
+// subjects = [subjects[0], subjects[1], subjects[2]];
 
 function showPage(page) {
     let containers = ['.startContainer', '.statementContainer', '.importanceContainer'];
@@ -28,6 +28,15 @@ function updateStatement() {
     document.querySelector('.title').innerHTML = subjects[subjectIndex].title;
     document.querySelector('.statement').innerHTML = subjects[subjectIndex].statement;
     document.querySelector('.counter').innerHTML = `${subjectIndex + 1}/${subjects.length}`;
+
+    // Hide all 'selected bars' and only make the selected one visible
+    let buttons = document.querySelectorAll('.buttonContainer input');
+    [...buttons].map(b => b.classList.remove('w3-border-blue'));
+
+    if (answers[`subject_${subjectIndex}`]) {
+        let selected = ['pro', 'none', 'contra'].indexOf(answers[`subject_${subjectIndex}`]);
+        buttons[selected].classList.add('w3-border-blue');
+    }
 }
 updateStatement();
 
@@ -36,7 +45,10 @@ updateStatement();
 /* ---- Back Button ---- */
 function clickBackButton() {
     if (!subjects[subjectIndex - 1]) return showPage(0);
-    if (currentPage != 1) return showPage(currentPage - 1);
+    if (currentPage != 1) {
+        updateStatement();
+        return showPage(currentPage - 1);
+    }
 
     subjectIndex--;
     updateStatement();
@@ -116,7 +128,7 @@ function generateImportanceCheckboxes() {
 function validateImportanceCheckboxes() {
     let checkboxes = document.querySelectorAll('.impCheckboxContainer input');
     let checked = [...checkboxes].filter(c => c.checked);
-    console.log(checked);
+    console.log(checked.map(c => c.id.split('subject')[1]));
 }
 
 
