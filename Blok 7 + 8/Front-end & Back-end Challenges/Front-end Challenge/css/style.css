@@ -112,15 +112,18 @@ div.buttonContainer > div {
 
 
 
-/* Importance Page  */
-div.importanceContainer {
+/* Importance & Parties Pages  */
+div.importanceContainer,
+div.partiesContainer {
     height: auto;
 }
-div.impTextContainer h1 {
+div.textContainer h1,
+div.textContainer p {
     width: 65%;
     display: inline-block;
 }
-div.importanceContainer button {
+div.importanceContainer button,
+div.partiesContainer button {
     padding: 15px 20px;
     display: inline-block;
     
@@ -148,11 +151,48 @@ div.errorContainer h2 {
 }
 
 div.impCheckboxContainer {
-    display: flex;
+    display: flex !important;
     align-items: right;
     justify-content: space-between;
+
+    background-color: lightgrey;
+    border-radius: 20px;
+
+    width: 110%;
+    position: relative;
+    left: -5%;
+    padding: 5%;
+    margin-top: 25px;
 }
 
-div.impCheckboxContainer label {
+div.impCheckboxContainer label,
+div.partiesCheckboxContainer label {
     user-select: none;
+}
+
+/* 
+div.partiesRadioCheckboxContainer,
+div.partiesLowerCheckboxContainer {
+    width: 100%;
+    display: block;
+} */
+div.partiesCheckboxContainer {
+    background-color: lightgrey;
+    border-radius: 20px;
+
+    width: 110%;
+    position: relative;
+    left: -5%;
+    padding: 5%;
+    margin-top: 25px;
+}
+
+div.partiesRadioCheckboxContainer div {
+    display: inline-block;
+    margin: 0 20px 40px 0;
+}
+div.partiesLowerCheckboxContainer {
+    display: flex !important;
+    align-items: right;
+    justify-content: space-between;
 }

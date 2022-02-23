@@ -13,6 +13,17 @@
 </head>
 
 <body class="background">
+    <script defer>
+        window.onload = () => {
+            document.querySelector('.startContainer h2').innerHTML +=
+                ` aan de hand van ${subjects.length} stellingen`;
+
+            generateImportanceCheckboxes();
+            generatePartiesCheckboxes();       
+        }
+    </script>
+
+
 
     <!-- Main Start Page -->
     <div class="container startContainer">
@@ -20,22 +31,13 @@
         <h1>Tweede Kamerverkiezingen 2021</h1>
         <h2>Test je politieke voorkeur</h2>
         <button class="mainButton" onclick="showPage(1)">Start</button>
-
-
-        <!-- NOT WORKING YET -->
-        <script defer>
-            window.onload = () => {
-                return document.querySelector('.startContainer h2').innerHTML +=
-                    ` aan de hand van ${subjects.length} stellingen`;
-            }
-        </script>
     </div>
 
 
 
     <!-- Back button  -->
     <button class="back w3-button w3-grey" onclick="clickBackButton()">Terug</button>
-    
+
 
 
     <!-- Voting Page -->
@@ -61,9 +63,10 @@
 
     <!-- Importance Page -->
     <div class="importanceContainer container">
-        <div class="impTextContainer">
+        <div class="textContainer">
             <h1 class="title" style="color: black">Zijn er onderwerpen die je extra belangrijk vindt?</h1>
             <button class="mainButton importanceButton" onclick="validateImportanceCheckboxes()">Volgende stap</button>
+            <p>0/30 stellingen geselecteerd</p>
         </div>
 
         <div class="errorContainer" style="display: none;">
@@ -75,7 +78,40 @@
         </div>
 
         <div class="impCheckboxContainer"></div>
-        <script defer>window.onload = () => generateImportanceCheckboxes()</script>
+    </div>
+
+
+
+    <!-- Parties Page -->
+    <div class="partiesContainer container">
+        <div class="textContainer">
+            <h1 class="title" style="color: black">Welke partijen wil je meenemen in het resultaat?</h1>
+            <button class="mainButton importanceButton" onclick="validateImportanceCheckboxes()">Volgende stap</button>
+            <p>Kies alle partijen, alleen de partijen die nu al in de Tweede Kamer zitten, of maak zelf een selectie. Selecteer minimaal 3 partijen.</p>
+        </div>
+
+        <div class="partiesCheckboxContainer">
+            <div class="partiesRadioCheckboxContainer">
+                <div>
+                    <input type="radio" name="partiesFilter" id="allParties" onclick="filterPartiesCheckboxes('all')">
+                    <label for="allParties">Alle partijen</label>
+                </div>
+                <div>
+                    <input type="radio" name="partiesFilter" id="bigParties" onclick="filterPartiesCheckboxes('big')">
+                    <label for="bigParties">Zittende partijen</label>
+                </div>
+                <div>
+                    <input type="radio" name="partiesFilter" id="secularParties" onclick="filterPartiesCheckboxes('secular')">
+                    <label for="secularParties">Seculiere partijen</label>
+                </div>
+                <div>
+                    <input type="radio" name="partiesFilter" id="secularParties">
+                    <label for="noParties">Geen partijen</label>
+                </div>
+            </div>
+
+            <div class="partiesLowerCheckboxContainer"></div>
+        </div>
     </div>
 </body>
 

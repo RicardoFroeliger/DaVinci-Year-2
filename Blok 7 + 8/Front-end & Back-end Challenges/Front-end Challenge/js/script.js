@@ -2,10 +2,10 @@ let currentPage = 0;
 let subjectIndex = 0;
 let answers = {}
 
-// subjects = [subjects[0], subjects[1], subjects[2]];
+subjects = [subjects[0], subjects[1], subjects[2]];
 
 function showPage(page) {
-    let containers = ['.startContainer', '.statementContainer', '.importanceContainer'];
+    let containers = ['.startContainer', '.statementContainer', '.importanceContainer', '.partiesContainer'];
     currentPage = page;
 
     // Hide all containers and only make the one needed visible
@@ -129,10 +129,59 @@ function validateImportanceCheckboxes() {
     let checkboxes = document.querySelectorAll('.impCheckboxContainer input');
     let checked = [...checkboxes].filter(c => c.checked);
     console.log(checked.map(c => c.id.split('subject')[1]));
+
+    showPage(3);
 }
 
 
 
+/* --------- Parties Page --------- */
+function generatePartiesCheckboxes() {
+    let columns = [];
+    for (let [i, party] of parties.sort((a, b) => b.size - a.size).entries()) {
+
+        // Create column containers for the checkboxes
+        let colDiv = document.createElement('div');
+        colDiv.style.display = 'inline-block';
+        if (i % 8 == 0) columns.push(colDiv);
+
+
+        // Create and style checkboxes
+        let div = document.createElement('div');
+        let input = document.createElement('input');
+        let label = document.createElement('label');
+
+        input.type = 'checkbox';
+        input.id = party.name;
+        label.setAttribute('for', party.name);
+        label.innerText = ` ${party.name}`;
+
+
+        // Append the checkboxes to the column and body
+        div.appendChild(input);
+        div.appendChild(label);
+        columns[columns.length - 1].appendChild(div);
+
+        let container = document.querySelector('.partiesLowerCheckboxContainer');
+        if (i % 10 == 0) container.appendChild(columns[columns.length - 1]);
+    }
+}
+
+function filterPartiesCheckboxes(filter) {
+    let inputs = document.querySelectorAll('.partiesLowerCheckboxContainer input');
+    [...inputs].map(i => i.checked = false);
+
+    switch (filter) {
+        case 'all':
+            return [...inputs].map(i => i.checked = true);
+        case 'big':
+            let bigParties = [...inputs].filter(i => parties.find(p => p.name == i.id).size > 1);
+            return bigParties.map(i => i.checked = true);
+        case 'secular':
+            let secularParties = [...inputs].filter(i => parties.find(p => p.name == i.id).secular);
+            return secularParties.map(i => i.checked = true);
+    }
+}
 // function validateAnswers() {
 //     // Reset Matches to 0
 //     parties.map(p => p.match = 0);
