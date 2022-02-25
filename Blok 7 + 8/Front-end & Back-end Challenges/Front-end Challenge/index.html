@@ -65,7 +65,7 @@
     <div class="importanceContainer container">
         <div class="textContainer">
             <h1 class="title" style="color: black">Zijn er onderwerpen die je extra belangrijk vindt?</h1>
-            <button class="mainButton importanceButton" onclick="validateImportanceCheckboxes()">Volgende stap</button>
+            <button class="mainButton" id="importanceButton" onclick="validateImportanceCheckboxes()">Volgende stap</button>
             <p>0/30 stellingen geselecteerd</p>
         </div>
 
@@ -86,7 +86,7 @@
     <div class="partiesContainer container">
         <div class="textContainer">
             <h1 class="title" style="color: black">Welke partijen wil je meenemen in het resultaat?</h1>
-            <button class="mainButton importanceButton" onclick="validateImportanceCheckboxes()">Volgende stap</button>
+            <button class="mainButton" id="partiesButton" disabled onclick="validatePartiesCheckboxes()">Volgende stap</button>
             <p>Kies alle partijen, alleen de partijen die nu al in de Tweede Kamer zitten, of maak zelf een selectie. Selecteer minimaal 3 partijen.</p>
         </div>
 
@@ -105,13 +105,20 @@
                     <label for="secularParties">Seculiere partijen</label>
                 </div>
                 <div>
-                    <input type="radio" name="partiesFilter" id="secularParties">
+                    <input type="radio" name="partiesFilter" id="noParties" onclick="filterPartiesCheckboxes(null)">
                     <label for="noParties">Geen partijen</label>
                 </div>
             </div>
 
             <div class="partiesLowerCheckboxContainer"></div>
         </div>
+    </div>
+
+
+
+    <!-- Result Page -->
+    <div class="resultContainer container">
+    
     </div>
 </body>
 

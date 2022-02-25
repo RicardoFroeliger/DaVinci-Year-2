@@ -5,8 +5,11 @@ let answers = {}
 subjects = [subjects[0], subjects[1], subjects[2]];
 
 function showPage(page) {
-    let containers = ['.startContainer', '.statementContainer', '.importanceContainer', '.partiesContainer'];
     currentPage = page;
+    let containers = [
+        '.startContainer', '.statementContainer',
+        '.importanceContainer', '.partiesContainer'
+    ];
 
     // Hide all containers and only make the one needed visible
     containers.map(c => document.querySelector(c).style.display = 'none');
@@ -18,7 +21,6 @@ function showPage(page) {
     document.querySelector('.buttonContainer').style.display = page == 1 ? 'block' : 'none';
     document.querySelector('h1.counter').style.display = page == 1 ? 'inline-block' : 'none';
     document.querySelector('button.back').style.display = page != 0 ? 'inline-block' : 'none';
-
 }
 showPage(0);
 
@@ -78,17 +80,14 @@ function validateAnswers() {
     // Check if there are more than 50% of the statements are answered
     let enoughAnswers = Object.values(answers).length > Math.floor(subjects.length / 2);
 
-
     // Show error and hide checkboxes if not enough answers
     document.querySelector('.errorContainer').style.display = enoughAnswers ? 'none' : 'block';
     document.querySelector('.impCheckboxContainer').style.display = enoughAnswers ? 'block' : 'none'
 
-
     // Disable button if not enough answers
-    if (enoughAnswers) document.querySelector('.importanceButton').removeAttribute('disabled');
-    else document.querySelector('.importanceButton').setAttribute('disabled', '');
+    document.querySelector('#importanceButton').disabled = !enoughAnswers;
 
-    showPage(2);
+    if(enoughAnswers) showPage(2);
 }
 
 
@@ -121,6 +120,7 @@ function generateImportanceCheckboxes() {
         columns[columns.length - 1].appendChild(div);
 
         let container = document.querySelector('.impCheckboxContainer');
+        container.style.display = 'flex';
         if (i % 10 == 0) container.appendChild(columns[columns.length - 1]);
     }
 }
@@ -130,6 +130,7 @@ function validateImportanceCheckboxes() {
     let checked = [...checkboxes].filter(c => c.checked);
     console.log(checked.map(c => c.id.split('subject')[1]));
 
+    // if statement
     showPage(3);
 }
 
@@ -153,6 +154,7 @@ function generatePartiesCheckboxes() {
 
         input.type = 'checkbox';
         input.id = party.name;
+        input.onchange = () => partyCheckboxUpdated();
         label.setAttribute('for', party.name);
         label.innerText = ` ${party.name}`;
 
@@ -168,20 +170,42 @@ function generatePartiesCheckboxes() {
 }
 
 function filterPartiesCheckboxes(filter) {
+    // Unchecks all checkboxes
     let inputs = document.querySelectorAll('.partiesLowerCheckboxContainer input');
     [...inputs].map(i => i.checked = false);
 
+    // Check all checkboxes selected by the filter
     switch (filter) {
         case 'all':
-            return [...inputs].map(i => i.checked = true);
+            [...inputs].map(i => i.checked = true);
+            break;
         case 'big':
             let bigParties = [...inputs].filter(i => parties.find(p => p.name == i.id).size > 1);
-            return bigParties.map(i => i.checked = true);
+            bigParties.map(i => i.checked = true);
+            break;
         case 'secular':
             let secularParties = [...inputs].filter(i => parties.find(p => p.name == i.id).secular);
-            return secularParties.map(i => i.checked = true);
+            secularParties.map(i => i.checked = true);
+            break;
     }
+
+    partyCheckboxUpdated();
 }
+
+function partyCheckboxUpdated() {
+    let button = document.querySelector('#partiesButton');
+    let inputs = document.querySelectorAll('.partiesLowerCheckboxContainer input');
+    
+    // Disable button if not enough checkboxes are selected
+    button.disabled = !([...inputs].filter(i => i.checked).length > 2);
+}
+
+function validatePartiesCheckboxes() {
+    let inputs = document.querySelectorAll('.partiesLowerCheckboxContainer input');
+    let selectedParties = [...inputs].filter(i => i.checked).map(i => i.id); 
+    console.log(parties.filter(p => selectedParties.includes(p.name)));
+}
+
 // function validateAnswers() {
 //     // Reset Matches to 0
 //     parties.map(p => p.match = 0);

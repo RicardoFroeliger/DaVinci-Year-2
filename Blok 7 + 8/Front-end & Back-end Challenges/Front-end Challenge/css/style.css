@@ -151,7 +151,7 @@ div.errorContainer h2 {
 }
 
 div.impCheckboxContainer {
-    display: flex !important;
+    display: flex;
     align-items: right;
     justify-content: space-between;
 
@@ -176,6 +176,9 @@ div.partiesLowerCheckboxContainer {
     width: 100%;
     display: block;
 } */
+button.partiesButton {
+    cursor: not-allowed;
+}
 div.partiesCheckboxContainer {
     background-color: lightgrey;
     border-radius: 20px;
