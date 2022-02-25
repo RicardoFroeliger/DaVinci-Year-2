@@ -112,7 +112,7 @@ div.buttonContainer > div {
 
 
 
-/* Importance & Parties Pages  */
+/* Importance & Parties Pages */
 div.importanceContainer,
 div.partiesContainer {
     height: auto;
@@ -155,7 +155,7 @@ div.impCheckboxContainer {
     align-items: right;
     justify-content: space-between;
 
-    background-color: lightgrey;
+    background-color: #eee;
     border-radius: 20px;
 
     width: 110%;
@@ -167,20 +167,15 @@ div.impCheckboxContainer {
 
 div.impCheckboxContainer label,
 div.partiesCheckboxContainer label {
+    cursor: pointer;
     user-select: none;
 }
 
-/* 
-div.partiesRadioCheckboxContainer,
-div.partiesLowerCheckboxContainer {
-    width: 100%;
-    display: block;
-} */
 button.partiesButton {
     cursor: not-allowed;
 }
 div.partiesCheckboxContainer {
-    background-color: lightgrey;
+    background-color: #eee;
     border-radius: 20px;
 
     width: 110%;
@@ -198,4 +193,39 @@ div.partiesLowerCheckboxContainer {
     display: flex !important;
     align-items: right;
     justify-content: space-between;
+}
+
+
+
+/* Result Page */
+div.resultContainer {
+    border-radius: 25px;
+    box-shadow: 0 0 80px rgb(0 0 0 / 10%);
+    padding: 30px;
+    height: auto;
+}
+div.resultCardContainer > div {
+    margin-bottom: 20px;
+}
+div.resultCardContainer h2 {
+    margin-bottom: 0;
+    text-align: left;
+}
+
+div.resultCardContainer > div > div {
+    /* background-color: red; */
+}
+
+div.resultCardContainer > div > div > h2 {
+    margin: 0;
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: 500;
+}
+div.resultCardContainer progress {
+    display: inline-block;
+    vertical-align: top;
+    width: 85%;
+    height: 50px;
+    margin-right: 2%;
 }

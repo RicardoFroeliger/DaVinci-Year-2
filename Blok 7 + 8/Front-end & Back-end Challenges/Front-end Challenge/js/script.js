@@ -1,6 +1,5 @@
-let currentPage = 0;
-let subjectIndex = 0;
-let answers = {}
+let currentPage = 0, subjectIndex = 0;
+let answers = {}, selectedParties = [];
 
 subjects = [subjects[0], subjects[1], subjects[2]];
 
@@ -8,7 +7,7 @@ function showPage(page) {
     currentPage = page;
     let containers = [
         '.startContainer', '.statementContainer',
-        '.importanceContainer', '.partiesContainer'
+        '.importanceContainer', '.partiesContainer', '.resultContainer'
     ];
 
     // Hide all containers and only make the one needed visible
@@ -87,7 +86,7 @@ function validateAnswers() {
     // Disable button if not enough answers
     document.querySelector('#importanceButton').disabled = !enoughAnswers;
 
-    if(enoughAnswers) showPage(2);
+    if (enoughAnswers) showPage(2);
 }
 
 
@@ -109,8 +108,8 @@ function generateImportanceCheckboxes() {
         let label = document.createElement('label');
 
         input.type = 'checkbox';
-        input.id = `subject${i}`;
-        label.setAttribute('for', `subject${i}`);
+        input.id = `subject_${i}`;
+        label.setAttribute('for', `subject_${i}`);
         label.innerText = ` ${subject.title}`;
 
 
@@ -128,9 +127,11 @@ function generateImportanceCheckboxes() {
 function validateImportanceCheckboxes() {
     let checkboxes = document.querySelectorAll('.impCheckboxContainer input');
     let checked = [...checkboxes].filter(c => c.checked);
-    console.log(checked.map(c => c.id.split('subject')[1]));
+    checked = checked.map(c => parseInt(c.id.split('_')[1]));
 
-    // if statement
+    // (Re)sets subject importance 
+    subjects.map((s, i) => s.important = checked.includes(i));
+
     showPage(3);
 }
 
@@ -195,82 +196,87 @@ function filterPartiesCheckboxes(filter) {
 function partyCheckboxUpdated() {
     let button = document.querySelector('#partiesButton');
     let inputs = document.querySelectorAll('.partiesLowerCheckboxContainer input');
-    
+
     // Disable button if not enough checkboxes are selected
-    button.disabled = !([...inputs].filter(i => i.checked).length > 2);
+    let enoughPartiesSelected = [...inputs].filter(i => i.checked).length > 2;
+    button.disabled = !enoughPartiesSelected;
 }
 
+/* TEST OF DE PARTIES OOK GERESET WORDEN ALS JE OP TERUG DRUKT */
 function validatePartiesCheckboxes() {
     let inputs = document.querySelectorAll('.partiesLowerCheckboxContainer input');
-    let selectedParties = [...inputs].filter(i => i.checked).map(i => i.id); 
-    console.log(parties.filter(p => selectedParties.includes(p.name)));
+    let enoughPartiesSelected = [...inputs].filter(i => i.checked).length > 2;
+    let checkedParties = [...inputs].filter(i => i.checked).map(i => i.id);
+
+    // Re(sets) all selected parties only the ones the result needs
+    selectedParties = parties.filter(p => checkedParties.includes(p.name));
+
+    if (enoughPartiesSelected) {
+        calculateResult();
+        showPage(4);
+    }
 }
 
-// function validateAnswers() {
-//     // Reset Matches to 0
-//     parties.map(p => p.match = 0);
-
-//     // Check if There are Enough Usable Answers
-//     // let usableAnswers = answers.filter(a => a.opinion != 'none').length;
-//     // if(usableAnswers < Math.ceil(subjects.length / 2))
-
-//     // for (let answer of answers) {
-//     //     for (let party of subjects[answer.subject].parties) {
-
-//     //         if (answer.opinion != 'none' && party.position != 'none') {
-//     //             let targetParty = parties.find(p => p.name == party.name);
-
-//     //             if (party.position == answer.opinion) targetParty.match++
-//     //             else targetParty.match--;
-//     //         }
-//     //     }
-//     // }
-//     // let sortedParties = parties.sort((a, b) => b.match - a.match);
-
-//     window.location = './importance.html';
-// }
-
-// function calculateMatchingParties() {
-//     let matchingParties = [];
-
-//     for (let answer of answers) {
-
-//     }
-//     console.log(answers)
-// }
-// function toggleEndScreen() {
-//     if (answers.length < 1) console.log('not enough info');
-
-//     // console.log('out')
-//     statement.innerHTML = 'done'
-//     document.querySelector('div.buttonContainer').style.display = 'none';
-//     calculateMatchingParties();
-//     toggleImportanceScreen();
-// }
 
 
+/* ---- Result Page ---- */
+function calculateResult() {
+    // (Re)sets all party matches to 0
+    parties.map(p => p.match = 0);
 
-// make it so that if the opinion matches the party's opinion
-// match = +1, no match = -1, no opinion = nothing
+    for (let answer of Object.entries(answers)) {
+        let subject = answer[0].split('_')[1], opinion = answer[1];
 
-// subjectIndex++;
+        for (let party of subjects[subject].parties) {
+            // Continue with the other party if either answer or position is none
+            if (opinion == 'none' || party.position == 'none') continue;
 
 
-// for (let party of subjects[subjectIndex].parties) {
-//     let targetParty = parties.find(p => p.name == party.name);
+            // Count up/down the match per party and check for subject importance
+            let targetParty = parties.find(p => p.name == party.name);
+            let important = subjects[subject].important;
 
-//     if (party.position == 'pro') {
-//         if (opinion == 'pro') targetParty.match++;
-//         else if (opinion == 'contra') targetParty.match--;
-//     } else if (party.position == 'contra') {
-//         if (opinion == 'contra') targetParty.match++;
-//         else if (opinion == 'pro') targetParty.match--;
-//     }
-// }
-// console.log(parties.map(p => p.match))
+            if (party.position == opinion) important ? targetParty.match += 2 : targetParty.match++;
+            else important ? targetParty.match -= 2 : targetParty.match--;
+        }
+    }
 
-// if(checkedBoxes.length > 2) {
-//     document.querySelector('.importanceContainer button').removeAttribute('disabled');
-// } else {
-//     document.querySelector('.importanceContainer button').setAttribute('disabled', '');
-// }
+    generateResultPage();
+}
+
+function generateResultPage() {
+    let container = document.querySelector('.resultCardContainer');
+    let sortedParties = selectedParties.sort((a, b) => b.match - a.match);
+
+    // (Re)sets all cards that are in the resultCardContainer
+    while (container.firstChild) container.removeChild(container.lastChild);
+
+    for (let party of sortedParties) {
+
+        // Calculate the matching percentage for each party
+        let percentage = ((party.match / subjects.length) * 100).toFixed(0);
+        if (percentage > 100) percentage = 100;
+        else if (percentage < 0) percentage = 0;
+        
+
+        // Create and style cards
+        let divInner = document.createElement('div'), divOuter = document.createElement('div');
+        let h2Inner = document.createElement('h2'), h2Outer = document.createElement('h2');
+        let progress = document.createElement('progress');
+
+        h2Outer.innerText = `${party.name} ${party.long ? `- (${party.long})` : ''}`;
+        h2Inner.innerText = `${percentage}%`;
+
+        progress.value = percentage;
+        progress.max = '100';
+        progress.min = '0';
+
+
+        // Append the cards to the container
+        divInner.appendChild(progress);
+        divInner.appendChild(h2Inner);
+        divOuter.appendChild(h2Outer);
+        divOuter.appendChild(divInner);
+        container.appendChild(divOuter);
+    }
+}
