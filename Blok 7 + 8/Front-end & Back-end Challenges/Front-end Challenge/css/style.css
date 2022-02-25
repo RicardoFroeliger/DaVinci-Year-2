@@ -212,10 +212,6 @@ div.resultCardContainer h2 {
     text-align: left;
 }
 
-div.resultCardContainer > div > div {
-    /* background-color: red; */
-}
-
 div.resultCardContainer > div > div > h2 {
     margin: 0;
     display: inline-block;

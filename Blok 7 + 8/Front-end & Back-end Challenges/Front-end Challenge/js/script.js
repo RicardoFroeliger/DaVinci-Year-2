@@ -1,8 +1,21 @@
 let currentPage = 0, subjectIndex = 0;
 let answers = {}, selectedParties = [];
 
-subjects = [subjects[0], subjects[1], subjects[2]];
+/* ------------ Uncomment for testing ------------ */
+// subjects = [subjects[0], subjects[1], subjects[2]];
 
+
+/* TODO */
+/**
+ * Make website responsive 
+ * Use tailwind framework instead of w3.css
+ * Change styling for importance/parties container and checkboxes
+ * Make full statements appear above the importance checkboxes when hovered over
+ * Make a list of the parties that agree/disagree for each statement
+**/
+
+
+/* ---- Show Page ---- */
 function showPage(page) {
     currentPage = page;
     let containers = [
@@ -20,15 +33,17 @@ function showPage(page) {
     document.querySelector('.buttonContainer').style.display = page == 1 ? 'block' : 'none';
     document.querySelector('h1.counter').style.display = page == 1 ? 'inline-block' : 'none';
     document.querySelector('button.back').style.display = page != 0 ? 'inline-block' : 'none';
+    document.querySelector('.impCheckboxContainer').style.display = page == 2 ? 'flex' : 'none';
 }
 showPage(0);
 
 
 
+/* -- Update Statement -- */
 function updateStatement() {
-    document.querySelector('.title').innerHTML = subjects[subjectIndex].title;
-    document.querySelector('.statement').innerHTML = subjects[subjectIndex].statement;
-    document.querySelector('.counter').innerHTML = `${subjectIndex + 1}/${subjects.length}`;
+    document.querySelector('.title').innerText = subjects[subjectIndex].title;
+    document.querySelector('.statement').innerText = subjects[subjectIndex].statement;
+    document.querySelector('.counter').innerText = `${subjectIndex + 1}/${subjects.length}`;
 
     // Hide all 'selected bars' and only make the selected one visible
     let buttons = document.querySelectorAll('.buttonContainer input');
@@ -66,6 +81,7 @@ function clickVoteButton(answer) {
     subjectIndex++;
     updateStatement();
 }
+
 function clickSkipButton() {
     // Clear a possible earlier answer when clicked
     delete answers[`subject_${subjectIndex}`];
@@ -81,7 +97,7 @@ function validateAnswers() {
 
     // Show error and hide checkboxes if not enough answers
     document.querySelector('.errorContainer').style.display = enoughAnswers ? 'none' : 'block';
-    document.querySelector('.impCheckboxContainer').style.display = enoughAnswers ? 'block' : 'none'
+    document.querySelector('.impCheckboxContainer').style.display = enoughAnswers ? 'block' : 'none';
 
     // Disable button if not enough answers
     document.querySelector('#importanceButton').disabled = !enoughAnswers;
@@ -109,6 +125,7 @@ function generateImportanceCheckboxes() {
 
         input.type = 'checkbox';
         input.id = `subject_${i}`;
+        input.onchange = () => importanceCheckboxUpdated();
         label.setAttribute('for', `subject_${i}`);
         label.innerText = ` ${subject.title}`;
 
@@ -119,9 +136,16 @@ function generateImportanceCheckboxes() {
         columns[columns.length - 1].appendChild(div);
 
         let container = document.querySelector('.impCheckboxContainer');
-        container.style.display = 'flex';
         if (i % 10 == 0) container.appendChild(columns[columns.length - 1]);
     }
+}
+
+function importanceCheckboxUpdated() {
+    let statementsSelected = document.querySelector('.importanceContainer p');
+    let checkboxes = document.querySelectorAll('.impCheckboxContainer input');
+    let checkedLength = [...checkboxes].filter(c => c.checked).length;
+
+    statementsSelected.innerText = `${checkedLength}/${subjects.length} stellingen geselecteerd`;
 }
 
 function validateImportanceCheckboxes() {
@@ -131,7 +155,6 @@ function validateImportanceCheckboxes() {
 
     // (Re)sets subject importance 
     subjects.map((s, i) => s.important = checked.includes(i));
-
     showPage(3);
 }
 
@@ -202,7 +225,6 @@ function partyCheckboxUpdated() {
     button.disabled = !enoughPartiesSelected;
 }
 
-/* TEST OF DE PARTIES OOK GERESET WORDEN ALS JE OP TERUG DRUKT */
 function validatePartiesCheckboxes() {
     let inputs = document.querySelectorAll('.partiesLowerCheckboxContainer input');
     let enoughPartiesSelected = [...inputs].filter(i => i.checked).length > 2;
@@ -257,7 +279,7 @@ function generateResultPage() {
         let percentage = ((party.match / subjects.length) * 100).toFixed(0);
         if (percentage > 100) percentage = 100;
         else if (percentage < 0) percentage = 0;
-        
+
 
         // Create and style cards
         let divInner = document.createElement('div'), divOuter = document.createElement('div');

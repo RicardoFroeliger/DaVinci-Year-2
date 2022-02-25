@@ -15,8 +15,11 @@
 <body class="background">
     <script defer>
         window.onload = () => {
-            document.querySelector('.startContainer h2').innerHTML +=
+            document.querySelector('.startContainer h2').innerText +=
                 ` aan de hand van ${subjects.length} stellingen`;
+
+            document.querySelector('.importanceContainer p').innerText = 
+                `0/${subjects.length} stellingen geselecteerd`;
 
             generateImportanceCheckboxes();
             generatePartiesCheckboxes();
@@ -53,8 +56,7 @@
     <div class="buttonContainer">
         <div>
             <input class="w3-button w3-green w3-leftbar" type="button" value="Eens" onclick="clickVoteButton('pro')">
-            <input class="w3-button w3-grey w3-leftbar" type="button" value="Geen van beide"
-                onclick="clickVoteButton('none')">
+            <input class="w3-button w3-grey w3-leftbar" type="button" value="Geen van beide" onclick="clickVoteButton('none')">
             <input class="w3-button w3-red w3-leftbar" type="button" value="Oneens" onclick="clickVoteButton('contra')">
             <input class="w3-button w3-black" type="button" value="Overslaan" onclick="clickSkipButton()">
         </div>
@@ -105,8 +107,7 @@
                     <label for="bigParties">Zittende partijen</label>
                 </div>
                 <div>
-                    <input type="radio" name="partiesFilter" id="secularParties"
-                        onclick="filterPartiesCheckboxes('secular')">
+                    <input type="radio" name="partiesFilter" id="secularParties" onclick="filterPartiesCheckboxes('secular')">
                     <label for="secularParties">Seculiere partijen</label>
                 </div>
                 <div>
