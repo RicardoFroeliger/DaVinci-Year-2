@@ -1,0 +1,56 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+
+h1 {
+    font-size: 1rem;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+}
+
+div.LIST {
+    background: #ebecf0;
+    border-radius: 0.5rem;
+    margin: 0.75rem 0;
+}
+
+div.LIST_NAME {
+    padding: 1rem 1.25rem;
+}
+div.LIST_NAME h1 {
+    margin: 0;
+}
+
+div.LIST_TASKS {
+    padding: 0 0.5rem 1rem 0.5rem;
+}
+
+div.TASK {
+    background: white;
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+div.TASK h1 {
+    font-weight: 500;
+    margin: 0;
+}
+
+div.CREATE_NEW_LIST {
+    background: #ebecf0;
+    border-radius: 0.5rem;
+    margin: 0.75rem 0;
+    cursor: pointer;
+}
+
+div.CREATE_NEW_LIST:hover {
+    
+}
