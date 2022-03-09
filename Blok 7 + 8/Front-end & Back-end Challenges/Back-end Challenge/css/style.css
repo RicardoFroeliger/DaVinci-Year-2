@@ -5,6 +5,7 @@
 
 body {
     font-family: 'Roboto', sans-serif;
+    word-break: break-word;
 }
 
 
@@ -15,21 +16,60 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
 }
 
+.form-group {
+    padding: 0 0.5rem 0.5rem 0.5rem;
+}
+.form-control {
+    margin-bottom: 0.5rem;
+}
+.form-control:focus {
+    border-color: white;
+    box-shadow: 0 0 0 0.25rem lightgrey;
+}
+
+.btn:focus {
+    border-color: none;
+    box-shadow: none;
+}
+
 div.LIST {
     background: #ebecf0;
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     margin: 0.75rem 0;
 }
 
-div.LIST_NAME {
-    padding: 1rem 1.25rem;
+div.LIST_HEADER {
+    padding: 1rem 0.75rem 1rem 1.25rem;
 }
-div.LIST_NAME h1 {
+div.LIST_HEADER h1 {
     margin: 0;
+    display: inline-block;
+    width: calc(100% - 40px);
+}
+span.LIST_DELETE_BUTTON {
+    float: right;
+}
+span.LIST_DELETE_BUTTON button {
+    background: transparent;
+    border:  none;
+    width: 30px;
+    height: 30px;
+    color: #aaa;
+}
+span.LIST_DELETE_BUTTON button:hover {
+    color: #ff5555;
+    cursor: pointer;
+}
+div.LIST_HEADER button {
+    font-size: 18px;
 }
 
 div.LIST_TASKS {
     padding: 0 0.5rem 1rem 0.5rem;
+    
+    /* white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; */
 }
 
 div.TASK {
@@ -45,12 +85,11 @@ div.TASK h1 {
 }
 
 div.CREATE_NEW_LIST {
-    background: #ebecf0;
+    background-color: rgba(0, 0, 0, 0.1);
     border-radius: 0.5rem;
     margin: 0.75rem 0;
-    cursor: pointer;
 }
 
 div.CREATE_NEW_LIST:hover {
-    
+    cursor: pointer;
 }
