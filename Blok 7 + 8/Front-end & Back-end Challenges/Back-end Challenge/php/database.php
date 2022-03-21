@@ -20,25 +20,58 @@ function sanitize($data) {
     return $data;
 }
 
-function getLists($table, $orderBy = 'id') {
-    return executeQuery("SELECT * FROM $table ORDER BY $orderBy");
+function getLists() {
+    return executeQuery('SELECT * FROM lists ORDER BY id');
+}
+
+function getListTasks($listId) {
+    return executeQuery(
+        'SELECT * FROM tasks WHERE listId=:listId ORDER BY id',
+        [':listId' => $listId]
+    );
 }
 
 function createList($newListName) {
     executeQuery(
         'INSERT INTO lists(name) VALUES(:newListName)', 
-        [':newListName' => sanitize($newListName)]
+        [':newListName' => $newListName]
     );
     return header("Refresh:0");
 }
 
 function deleteList($deletedListId) {
-    // echo '<script>confirm(\'hi\')</script>';
     executeQuery(
         'DELETE FROM lists WHERE id=:id', 
-        [':id' => sanitize($deletedListId)]
+        [':id' => $deletedListId]
+    );
+    executeQuery(
+        'DELETE FROM tasks WHERE listId=:id', 
+        [':id' => $deletedListId]
     );
     return header("Refresh:0");
 }
 
+function createTask($newTaskListId, $newTaskText) {
+    executeQuery(
+        'INSERT INTO tasks(listId, text) VALUES (:newTaskListId, :newTaskText)',
+        [':newTaskListId' => $newTaskListId, ':newTaskText' => $newTaskText]
+    );
+    return header("Refresh:0");
+}
+
+function editTask($editTaskId, $editTaskText) {
+    executeQuery(
+        'UPDATE tasks SET text=:editTaskText WHERE id=:editTaskId',
+        [':editTaskText' => $editTaskText, ':editTaskId' => $editTaskId]
+    );
+    return header("Refresh:0");
+}
+
+function deleteTask($deleteTaskId) {
+    executeQuery(
+        'DELETE FROM tasks WHERE id=:deleteTaskId',
+        [':deleteTaskId' => $deleteTaskId]
+    );
+    return header("Refresh:0");
+}
 ?>
