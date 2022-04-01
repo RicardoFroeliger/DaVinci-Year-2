@@ -1,20 +1,13 @@
 <?php
 
-require_once('Pokemon.php');
-
-// $gengar = new Pokemon(
-//     'Gengar', 
-//     new EnergyType('Ghost'),
-//     10,
-//     50,
-//     [
-//         new Attack('Shadow Claw', 100, new EnergyType('Ghost')),
-//         new Attack('Self destruct', 150, new EnergyType('Normal'))
-//     ],
-//     new Weakness(new EnergyType('Fire'), 2),
-//     new Resistance(new EnergyType('Water'), 10)
-// );
-// print_r('<h4>'.$pokemon.'</h4>');
+require_once('./Classes/Pokemon.php');
+require_once('./Classes/EnergyType.php');
+require_once('./Classes/Attack.php');
+require_once('./Classes/Weakness.php');
+require_once('./Classes/Resistance.php');
+require_once('./Classes/Pikachu.php');
+require_once('./Classes/Charmeleon.php');
+require_once('./Classes/Fight.php');
 
 $pikachu = new Pikachu('Pika', 60, [
     ['name' => 'Electro Ball', 'damage' => 50, 'EnergyType' => new EnergyType('Electric')],
