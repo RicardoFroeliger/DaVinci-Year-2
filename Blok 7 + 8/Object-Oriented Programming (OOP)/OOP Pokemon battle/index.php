@@ -7,31 +7,52 @@ require_once('./Classes/Weakness.php');
 require_once('./Classes/Resistance.php');
 require_once('./Classes/Pikachu.php');
 require_once('./Classes/Charmeleon.php');
-require_once('./Classes/Fight.php');
-
-$pikachu = new Pikachu('Pika', 60, [
-    ['name' => 'Electro Ball', 'damage' => 50, 'EnergyType' => new EnergyType('Electric')],
-    ['name' => 'Thunder Punch', 'damage' => 20, 'EnergyType' => new EnergyType('Electric')]
-]);
-
-$charmeleon = new Charmeleon('Flame boi', 60, [
-    ['name' => 'Headbutt', 'damage' => 10, 'EnergyType' => new EnergyType('Normal')],
-    ['name' => 'Ember', 'damage' => 30, 'EnergyType' => new EnergyType('Fire')]
-]);
-
-echo "<p>{$pikachu->name} has {$pikachu->health} health.</p>"; 
-echo "<p>{$charmeleon->name} has {$charmeleon->health} health.</p>";
 
 
-function fight ($fight, $attackIndex) {
-    $attack = $fight->attack($attackIndex);
+
+$pikachu = new Pikachu('Pika', 60, 
+    new EnergyType('Lightning'),
+    new Weakness(new EnergyType('Fire'), 1.5),
+    new Resistance(new EnergyType('Fighting'), 20), 
+    [
+        new Attack('Electro Ball', 50, new EnergyType('Electric')),
+        new Attack('Thunder Punch', 20, new EnergyType('Electric'))
+    ]
+);
+
+$charmeleon = new Charmeleon('Flame boi', 60, 
+    new EnergyType('Fire'),
+    new Weakness(new EnergyType('Water'), 2),
+    new Resistance(new EnergyType('Lightning'), 10),
+    [
+        new Attack('Headbutt', 10, new EnergyType('Normal')),
+        new Attack('Ember', 30, new EnergyType('Fire'))
+    ]
+);
+
+
+
+echo "<p>{$pikachu->getName()} has {$pikachu->getHealth()} health.</p>"; 
+echo "<p>{$charmeleon->getName()} has {$charmeleon->getHealth()} health.</p>";
+
+
+
+function fight($pokemon1, $pokemon2, $attackIndex) {
+    $attack = $pokemon1->attack($pokemon2, $attackIndex);
+    $population = $pokemon1->getPopulation();
+    $populationHealth = $pokemon1->getPopulationhealth();
     
-    echo "<p>{$fight->pokemon1->name} attacks {$fight->pokemon2->name} ".
+    echo "<br><p>{$pokemon1->getName()} attacks {$pokemon2->getName()} ".
         "with {$attack['name']} for {$attack['damage']} damage.<p>";
     
-    echo "<p>{$fight->pokemon2->name} has {$fight->pokemon2->health} health.</p>"; 
+    echo "<p>{$pokemon2->getName()} has {$pokemon2->getHealth()} health.</p>"; 
+
+    echo "<p>There are {$population} Pokémon left ". 
+        "with an average of {$populationHealth} health</p>";
 }
 
-fight(new Fight($pikachu, $charmeleon), 0);
 
-fight(new Fight($charmeleon, $pikachu), 1); 
+
+fight($pikachu, $charmeleon, 0);
+
+fight($charmeleon, $pikachu, 1);
