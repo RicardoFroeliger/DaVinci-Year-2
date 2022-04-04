@@ -39,16 +39,14 @@ echo "<p>{$charmeleon->getName()} has {$charmeleon->getHealth()} health.</p>";
 
 function fight($pokemon1, $pokemon2, $attackIndex) {
     $attack = $pokemon1->attack($pokemon2, $attackIndex);
-    $population = $pokemon1->getPopulation();
-    $populationHealth = $pokemon1->getPopulationhealth();
     
     echo "<br><p>{$pokemon1->getName()} attacks {$pokemon2->getName()} ".
-        "with {$attack['name']} for {$attack['damage']} damage.<p>";
+        "with {$attack->getName()} for {$attack->getDamage()} damage.<p>";
     
     echo "<p>{$pokemon2->getName()} has {$pokemon2->getHealth()} health.</p>"; 
 
-    echo "<p>There are {$population} Pokémon left ". 
-        "with an average of {$populationHealth} health</p>";
+    echo "<p>There are {$pokemon1->getPopulation()} Pokémon left ". 
+        "with an average of {$pokemon1->getPopulationhealth()} health</p>";
 }
 
 
@@ -56,3 +54,5 @@ function fight($pokemon1, $pokemon2, $attackIndex) {
 fight($pikachu, $charmeleon, 0);
 
 fight($charmeleon, $pikachu, 1);
+
+fight($pikachu, $charmeleon, 1);

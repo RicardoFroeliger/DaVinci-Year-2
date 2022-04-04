@@ -37,32 +37,37 @@ class Pokemon {
 
     public static function getPopulationHealth() {
         return self::$populationHealth / self::$population;
-    }
+    ;}
 
     public function attack($enemy, $attackIndex) {
         $attack = $this->Attacks[$attackIndex];
-        $damage = $attack->damage;
-
-        if($enemy->Weakness->EnergyType->name == $attack->EnergyType->name) { // $this->EnergyType->name 
-            $damage *= $this->Weakness->multiplier;
-        }
-
-        if($enemy->Resistance->EnergyType->name == $attack->EnergyType->name) { // $this->EnergyType->name
-            $damage -= $enemy->Resistance->resistance;
-        }
-
+        $damage = $enemy->calculateDamage($attack);
         $enemy->takeDamage($damage);
 
-        return [
-            "name" => $attack->name,
-            "damage" => $damage
-        ];
+        return $attack;
+    }
+
+    public function calculateDamage($attack) {
+        if($this->Weakness->EnergyType->name == $attack->EnergyType->name) { // $this->EnergyType->name
+            $attack->damage *= $this->Weakness->multiplier;
+        }
+
+        if($this->Resistance->EnergyType->name == $attack->EnergyType->name) { // $this->EnergyType->name
+            $attack->damage -= $this->Resistance->resistance;
+        }
+
+        return $attack->damage;
     }
 
     public function takeDamage($damage) {
-        $this->health -= $damage;
-        self::$populationHealth -= $damage;
-
+        if(($this->health - $damage) < 1) {
+            self::$populationHealth -= $this->health;
+            $this->health = 0;
+        } else {
+            self::$populationHealth -= $damage;
+            $this->health -= $damage;
+        }
+    
         if($this->health < 1) $this->pokemonDies();
     }
 
