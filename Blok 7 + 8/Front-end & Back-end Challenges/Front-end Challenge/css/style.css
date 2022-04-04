@@ -5,6 +5,8 @@
 
 .w3-button {
     border-radius: 10px;
+    font-size: 1.2em;
+    color: white !important;
 }
 
 body.background {
@@ -59,6 +61,9 @@ button.mainButton:hover {
     background-color: #001eef;
     transition: all .15s;
 }
+button.back {
+    margin: 25px 50px;
+}
 
 
 
@@ -109,7 +114,6 @@ div.buttonContainer > div {
     left: 50%;
     transform: translate(-50%, -50%);
 }
-
 
 
 /* Importance & Parties Pages */
