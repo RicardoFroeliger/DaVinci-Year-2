@@ -1,7 +1,7 @@
 <?php
 
 function executeQuery($query, $params = [], $lastId = false) {
-    $connection = new PDO('mysql:host=localhost;dbname=year_3_back-end-challenge;', 'root', 'mysql');
+    $connection = new PDO('mysql:host=localhost;dbname=back-end-challenge;', 'root', 'mysql');
 
     $data = $connection->prepare($query);
     $data ->execute($params);
@@ -20,6 +20,8 @@ function sanitize($data) {
     return $data;
 }
 
+
+
 function getLists() {
     return executeQuery('SELECT * FROM lists ORDER BY id');
 }
@@ -31,12 +33,22 @@ function getListTasks($listId) {
     );
 }
 
-function createList($newListName) {
+
+
+function createList($createdListName) {
     executeQuery(
-        'INSERT INTO lists(name) VALUES(:newListName)', 
-        [':newListName' => $newListName]
+        'INSERT INTO lists(name) VALUES(:name)', 
+        [':name' => $createdListName]
     );
-    return header("Refresh:0");
+    return header('Refresh:0');
+}
+
+function editList($editedListId, $editedListName) {
+    executeQuery(
+        'UPDATE lists SET name=:name WHERE id=:id',
+        [':id' => $editedListId, ':name' => $editedListName, ]
+    );
+    return header('Refresh:0');
 }
 
 function deleteList($deletedListId) {
@@ -48,30 +60,31 @@ function deleteList($deletedListId) {
         'DELETE FROM tasks WHERE listId=:id', 
         [':id' => $deletedListId]
     );
-    return header("Refresh:0");
+    return header('Refresh:0');
 }
 
-function createTask($newTaskListId, $newTaskText) {
+function createTask($createdTaskListId, $createdTaskText) {
     executeQuery(
-        'INSERT INTO tasks(listId, text) VALUES (:newTaskListId, :newTaskText)',
-        [':newTaskListId' => $newTaskListId, ':newTaskText' => $newTaskText]
+        'INSERT INTO tasks(listId, text) VALUES (:listId, :text)',
+        [':listId' => $createdTaskListId, ':text' => $createdTaskText]
     );
-    return header("Refresh:0");
+    return header('Refresh:0');
 }
 
-function editTask($editTaskId, $editTaskText) {
+function editTask($editedTaskId, $editedTaskText) {
     executeQuery(
-        'UPDATE tasks SET text=:editTaskText WHERE id=:editTaskId',
-        [':editTaskText' => $editTaskText, ':editTaskId' => $editTaskId]
+        'UPDATE tasks SET text=:text WHERE id=:id',
+        [':id' => $editedTaskId, ':text' => $editedTaskText]
     );
-    return header("Refresh:0");
+    return header('Refresh:0');
 }
 
-function deleteTask($deleteTaskId) {
+function deleteTask($deletedTaskId) {
+    echo 'hi';
     executeQuery(
-        'DELETE FROM tasks WHERE id=:deleteTaskId',
-        [':deleteTaskId' => $deleteTaskId]
+        'DELETE FROM tasks WHERE id=:id',
+        [':id' => $deletedTaskId]
     );
-    return header("Refresh:0");
+    return header('Refresh:0');
 }
 ?>
