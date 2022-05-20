@@ -1,0 +1,19 @@
+C:\Users\Eigenaar> composer global require laravel/installer
+
+
+
+C:\Program Files\Ampps\www\DaVinci-Year-2\Blok 7 + 8> laravel new Jukebox
+
+
+
+C:\Program Files\Ampps\www\DaVinci-Year-2\Blok 7 + 8\5. MPA-SPA Frameworks> composer require laravel/ui
+
+C:\Program Files\Ampps\www\DaVinci-Year-2\Blok 7 + 8\5. MPA-SPA Frameworks> php artisan ui vue --auth
+
+C:\Program Files\Ampps\www\DaVinci-Year-2\Blok 7 + 8\5. MPA-SPA Frameworks> npm install
+
+C:\Program Files\Ampps\www\DaVinci-Year-2\Blok 7 + 8\5. MPA-SPA Frameworks> npm run dev
+
+C:\Program Files\Ampps\www\DaVinci-Year-2\Blok 7 + 8\5. MPA-SPA Frameworks> npm update vue-loader
+
+C:\Program Files\Ampps\www\DaVinci-Year-2\Blok 7 + 8\5. MPA-SPA Frameworks> npm run dev
