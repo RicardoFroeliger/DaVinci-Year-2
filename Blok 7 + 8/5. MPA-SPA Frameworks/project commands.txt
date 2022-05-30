@@ -20,6 +20,10 @@ C:\Program Files\Ampps\www\DaVinci-Year-2\Blok 7 + 8\5. MPA-SPA Frameworks> npm 
 
 
 
+C:\Program Files\Ampps\www\DaVinci-Year-2\Blok 7 + 8\5. MPA-SPA Frameworks> php artisan migrate
 
 C:\Program Files\Ampps\www\DaVinci-Year-2\Blok 7 + 8\5. MPA-SPA Frameworks> php artisan make:controller GenreController
 
+C:\Program Files\Ampps\www\DaVinci-Year-2\Blok 7 + 8\5. MPA-SPA Frameworks> php artisan make:migration create_genres_table
+
+C:\Program Files\Ampps\www\DaVinci-Year-2\Blok 7 + 8\5. MPA-SPA Frameworks> php artisan make:model Genre
