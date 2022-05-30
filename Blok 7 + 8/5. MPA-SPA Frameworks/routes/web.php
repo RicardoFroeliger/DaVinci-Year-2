@@ -14,13 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('template');
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/genres/{genre}', function ($genre) {
-    return view('genre', ['genre' => $genre]);
-});
+Route::get('/genres', [App\Http\Controllers\GenreController::class, 'index']);
+
+Route::get('/genres/{genre}', [App\Http\Controllers\GenreController::class, 'show']);
