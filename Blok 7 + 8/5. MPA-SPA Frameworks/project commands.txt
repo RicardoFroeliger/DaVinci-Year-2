@@ -37,3 +37,11 @@ C:\Program Files\Ampps\www\DaVinci-Year-2\Blok 7 + 8\5. MPA-SPA Frameworks> php 
 C:\Program Files\Ampps\www\DaVinci-Year-2\Blok 7 + 8\5. MPA-SPA Frameworks> php artisan make:model Song
 
 C:\Program Files\Ampps\www\DaVinci-Year-2\Blok 7 + 8\5. MPA-SPA Frameworks> php artisan migrate:refresh
+
+
+
+C:\Program Files\Ampps\www\DaVinci-Year-2\Blok 7 + 8\5. MPA-SPA Frameworks> php artisan make:seeder GenreTableSeeder
+
+C:\Program Files\Ampps\www\DaVinci-Year-2\Blok 7 + 8\5. MPA-SPA Frameworks> php artisan make:factory GenreFactory
+
+C:\Program Files\Ampps\www\DaVinci-Year-2\Blok 7 + 8\5. MPA-SPA Frameworks> php artisan db:seed
