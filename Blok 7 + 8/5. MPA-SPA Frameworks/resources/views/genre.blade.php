@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+    <h1>{{ $genre->name }}</h1>
 
-<h1>Genre page</h1>
-<h3>Genre: {{ $genre }}</h3>
-
+    @foreach ($songs as $song)
+        <h3><a href="/song/{{ $song->id }}">{{ $song->name }}</a></h3>
+    @endforeach
 @endsection

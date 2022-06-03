@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Genre;
+use App\Models\Song;
 use Illuminate\Http\Request;
 
 class GenreController extends Controller
@@ -16,6 +17,8 @@ class GenreController extends Controller
 
     public function show(Genre $genre)
     {
-        return view('genre', ['genre' => $genre]);
+        $songs = Song::where('genreId', '=', $genre->id)->get();
+
+        return view('genre', ['genre' => $genre, 'songs' => $songs]);
     }
 }
