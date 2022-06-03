@@ -27,3 +27,13 @@ C:\Program Files\Ampps\www\DaVinci-Year-2\Blok 7 + 8\5. MPA-SPA Frameworks> php 
 C:\Program Files\Ampps\www\DaVinci-Year-2\Blok 7 + 8\5. MPA-SPA Frameworks> php artisan make:migration create_genres_table
 
 C:\Program Files\Ampps\www\DaVinci-Year-2\Blok 7 + 8\5. MPA-SPA Frameworks> php artisan make:model Genre
+
+
+
+C:\Program Files\Ampps\www\DaVinci-Year-2\Blok 7 + 8\5. MPA-SPA Frameworks> php artisan make:controller SongController
+
+C:\Program Files\Ampps\www\DaVinci-Year-2\Blok 7 + 8\5. MPA-SPA Frameworks> php artisan make:migration create_songs_table
+
+C:\Program Files\Ampps\www\DaVinci-Year-2\Blok 7 + 8\5. MPA-SPA Frameworks> php artisan make:model Song
+
+C:\Program Files\Ampps\www\DaVinci-Year-2\Blok 7 + 8\5. MPA-SPA Frameworks> php artisan migrate:refresh
