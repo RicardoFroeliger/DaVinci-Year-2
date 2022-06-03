@@ -23,4 +23,6 @@ Auth::routes();
 
 Route::get('/genres', [App\Http\Controllers\GenreController::class, 'index']);
 
-Route::get('/genres/{genre}', [App\Http\Controllers\GenreController::class, 'show']);
+Route::get('/genre/{genre}', [App\Http\Controllers\GenreController::class, 'show']);
+
+Route::get('/song/{song}', [App\Http\Controllers\SongController::class, 'show']);
