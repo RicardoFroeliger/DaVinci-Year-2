@@ -1,9 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>{{ $genre->name }}</h1>
+    <button onclick="window.location.href ='/genres'" class="btn btn-secondary ms-4">
+        <h4 class="m-0">Back</h4>
+    </button>
 
+
+    <h1 class="text-center">{{ $genre->name }}</h1>
+    
     @foreach ($songs as $song)
-        <h3><a href="/song/{{ $song->id }}">{{ $song->name }}</a></h3>
+        <h3 class="text-center"><a href="/song/{{ $song->id }}">{{ $song->name }}</a></h3>
     @endforeach
 @endsection
