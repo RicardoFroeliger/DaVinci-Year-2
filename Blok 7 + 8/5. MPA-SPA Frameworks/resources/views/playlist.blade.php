@@ -7,6 +7,4 @@
                 {{ gmdate('i:s', $song->duration) }} |
                 {{ $song->artist }}</a></h3>
     @endforeach
-
-    <h1>{{ $value }}</h1>
 @endsection

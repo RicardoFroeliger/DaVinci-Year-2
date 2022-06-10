@@ -1,8 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <button onclick="window.location.href ='/'" class="btn btn-secondary ms-4">
+    <button onclick="javascript:history.back()" class="btn btn-secondary ms-4">
         <h4 class="m-0">Back</h4>
+    </button>
+    <button onclick="window.location ='/'" class="btn btn-secondary ms-4">
+        <h4 class="m-0">Home</h4>
     </button>
 
     <h1 class="text-center">Genres</h1>
