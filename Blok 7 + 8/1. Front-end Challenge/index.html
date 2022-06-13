@@ -13,33 +13,19 @@
 </head>
 
 <body class="background">
-    <script defer>
-        window.onload = () => {
-            document.querySelector('.startContainer h2').innerText +=
-                ` aan de hand van ${subjects.length} stellingen`;
-
-            document.querySelector('.importanceContainer p').innerText = 
-                `0/${subjects.length} stellingen geselecteerd`;
-
-            generateImportanceCheckboxes();
-            generatePartiesCheckboxes();
-        }
-    </script>
-
-
 
     <!-- Main Start Page -->
     <div class="container startContainer">
         <img src="https://tweedekamer2021.stemwijzer.nl/gfx/img/votematch_applogo.svg" alt="Logo Stemwijzer">
         <h1>Tweede Kamerverkiezingen 2021</h1>
         <h2>Test je politieke voorkeur</h2>
-        <button class="mainButton" onclick="showPage(1)">Start</button>
+        <button class="mainButton" id="startButton">Start</button>
     </div>
 
 
 
     <!-- Back button  -->
-    <button class="back w3-button w3-grey" onclick="clickBackButton()">Terug</button>
+    <button class="back w3-button w3-grey" id="backButton">Terug</button>
 
 
 
@@ -55,10 +41,10 @@
 
     <div class="buttonContainer">
         <div>
-            <input class="w3-button w3-green w3-leftbar" type="button" value="Eens" onclick="clickVoteButton('pro')">
-            <input class="w3-button w3-grey w3-leftbar" type="button" value="Geen van beide" onclick="clickVoteButton('none')">
-            <input class="w3-button w3-red w3-leftbar" type="button" value="Oneens" onclick="clickVoteButton('contra')">
-            <input class="w3-button w3-black" type="button" value="Overslaan" onclick="clickSkipButton()">
+            <input class="w3-button w3-green w3-leftbar" type="button" id="proButton" value="Eens">
+            <input class="w3-button w3-grey w3-leftbar" type="button" id="noneButton" value="Geen van beide">
+            <input class="w3-button w3-red w3-leftbar" type="button" id="contraButton" value="Oneens">
+            <input class="w3-button w3-black" id="skipButton" type="button" value="Overslaan">
         </div>
     </div>
 
@@ -68,8 +54,7 @@
     <div class="importanceContainer container">
         <div class="textContainer">
             <h1 class="title" style="color: black">Zijn er onderwerpen die je extra belangrijk vindt?</h1>
-            <button class="mainButton" id="importanceButton" onclick="validateImportanceCheckboxes()">Volgende
-                stap</button>
+            <button class="mainButton" id="importanceButton">Volgende stap</button>
             <p>0/30 stellingen geselecteerd</p>
         </div>
 
@@ -90,7 +75,7 @@
     <div class="partiesContainer container">
         <div class="textContainer">
             <h1 class="title" style="color: black">Welke partijen wil je meenemen in het resultaat?</h1>
-            <button class="mainButton" id="partiesButton" disabled onclick="validatePartiesCheckboxes()">Volgende
+            <button class="mainButton" id="partiesButton" disabled>Volgende
                 stap</button>
             <p>Kies alle partijen, alleen de partijen die nu al in de Tweede Kamer zitten, of maak zelf een selectie.
                 Selecteer minimaal 3 partijen.</p>
@@ -99,19 +84,19 @@
         <div class="partiesCheckboxContainer">
             <div class="partiesRadioCheckboxContainer">
                 <div>
-                    <input type="radio" name="partiesFilter" id="allParties" onclick="filterPartiesCheckboxes('all')">
+                    <input type="radio" name="partiesFilter" id="allParties">
                     <label for="allParties">Alle partijen</label>
                 </div>
                 <div>
-                    <input type="radio" name="partiesFilter" id="bigParties" onclick="filterPartiesCheckboxes('big')">
+                    <input type="radio" name="partiesFilter" id="bigParties">
                     <label for="bigParties">Zittende partijen</label>
                 </div>
                 <div>
-                    <input type="radio" name="partiesFilter" id="secularParties" onclick="filterPartiesCheckboxes('secular')">
+                    <input type="radio" name="partiesFilter" id="secularParties">
                     <label for="secularParties">Seculiere partijen</label>
                 </div>
                 <div>
-                    <input type="radio" name="partiesFilter" id="noParties" onclick="filterPartiesCheckboxes(null)">
+                    <input type="radio" name="partiesFilter" id="noParties">
                     <label for="noParties">Geen partijen</label>
                 </div>
             </div>

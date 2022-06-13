@@ -15,6 +15,22 @@ let answers = {}, selectedParties = [];
 **/
 
 
+
+window.onload = () => {
+    document.querySelector('.startContainer h2').innerText +=
+        ` aan de hand van ${subjects.length} stellingen`;
+
+    document.querySelector('.importanceContainer p').innerText = 
+        `0/${subjects.length} stellingen geselecteerd`;
+
+    document.querySelector('#startButton').addEventListener('click', () => showPage(1));
+
+    generateImportanceCheckboxes();
+    generatePartiesCheckboxes();
+}
+
+
+
 /* ---- Show Page ---- */
 function showPage(page) {
     currentPage = page;
@@ -58,7 +74,7 @@ updateStatement();
 
 
 /* ---- Back Button ---- */
-function clickBackButton() {
+document.querySelector('#backButton').addEventListener('click', () => {
     if (!subjects[subjectIndex - 1]) return showPage(0);
     if (currentPage != 1) {
         updateStatement();
@@ -67,28 +83,30 @@ function clickBackButton() {
 
     subjectIndex--;
     updateStatement();
-}
+});
 
 
 
 /* -------- Vote Page -------- */
-function clickVoteButton(answer) {
-    // (Over)write the answer when clicked
-    answers[`subject_${subjectIndex}`] = answer;
+[...document.querySelectorAll('.buttonContainer input')].map(btn => {
+    btn.addEventListener('click', () => {
+        // (Over)write the answer when clicked
+        answers[`subject_${subjectIndex}`] = btn.id.split('Button')[0];
 
-    if (!subjects[subjectIndex + 1]) return validateAnswers();
-    subjectIndex++;
-    updateStatement();
-}
+        if (!subjects[subjectIndex + 1]) return validateAnswers();
+        subjectIndex++;
+        updateStatement();
+    });
+});
 
-function clickSkipButton() {
+document.querySelector('#skipButton').addEventListener('click', () => {
     // Clear a possible earlier answer when clicked
     delete answers[`subject_${subjectIndex}`];
 
     if (!subjects[subjectIndex + 1]) return validateAnswers();
     subjectIndex++;
     updateStatement();
-}
+});
 
 function validateAnswers() {
     // Check if there are more than 50% of the statements are answered
@@ -147,7 +165,7 @@ function importanceCheckboxUpdated() {
     statementsSelected.innerText = `${checkedLength}/${subjects.length} stellingen geselecteerd`;
 }
 
-function validateImportanceCheckboxes() {
+document.querySelector('#importanceButton').addEventListener('click', () => {
     let checkboxes = document.querySelectorAll('.impCheckboxContainer input');
     let checked = [...checkboxes].filter(c => c.checked);
     checked = checked.map(c => parseInt(c.id.split('_')[1]));
@@ -155,7 +173,7 @@ function validateImportanceCheckboxes() {
     // (Re)sets subject importance 
     subjects.map((s, i) => s.important = checked.includes(i));
     showPage(3);
-}
+});
 
 
 
@@ -192,28 +210,30 @@ function generatePartiesCheckboxes() {
     }
 }
 
-function filterPartiesCheckboxes(filter) {
-    // Unchecks all checkboxes
-    let inputs = document.querySelectorAll('.partiesLowerCheckboxContainer input');
-    [...inputs].map(i => i.checked = false);
+[...document.querySelectorAll('[name=partiesFilter]')].map(btn => {
+    btn.addEventListener('click', () => {
+        // Unchecks all checkboxes
+        let inputs = document.querySelectorAll('.partiesLowerCheckboxContainer input');
+        [...inputs].map(i => i.checked = false);
 
-    // Check all checkboxes selected by the filter
-    switch (filter) {
-        case 'all':
-            [...inputs].map(i => i.checked = true);
-            break;
-        case 'big':
-            let bigParties = [...inputs].filter(i => parties.find(p => p.name == i.id).size > 1);
-            bigParties.map(i => i.checked = true);
-            break;
-        case 'secular':
-            let secularParties = [...inputs].filter(i => parties.find(p => p.name == i.id).secular);
-            secularParties.map(i => i.checked = true);
-            break;
-    }
+        // Check all checkboxes selected by the filter
+        switch (btn.id) {
+            case 'allParties':
+                [...inputs].map(i => i.checked = true);
+                break;
+            case 'bigParties':
+                let bigParties = [...inputs].filter(i => parties.find(p => p.name == i.id).size > 1);
+                bigParties.map(i => i.checked = true);
+                break;
+            case 'secularParties':
+                let secularParties = [...inputs].filter(i => parties.find(p => p.name == i.id).secular);
+                secularParties.map(i => i.checked = true);
+                break;
+        }
 
-    partyCheckboxUpdated();
-}
+        partyCheckboxUpdated();
+    });
+});
 
 function partyCheckboxUpdated() {
     let button = document.querySelector('#partiesButton');
@@ -224,7 +244,7 @@ function partyCheckboxUpdated() {
     button.disabled = !enoughPartiesSelected;
 }
 
-function validatePartiesCheckboxes() {
+document.querySelector('#partiesButton').addEventListener('click', () => {
     let inputs = document.querySelectorAll('.partiesLowerCheckboxContainer input');
     let enoughPartiesSelected = [...inputs].filter(i => i.checked).length > 2;
     let checkedParties = [...inputs].filter(i => i.checked).map(i => i.id);
@@ -236,7 +256,7 @@ function validatePartiesCheckboxes() {
         calculateResult();
         showPage(4);
     }
-}
+});
 
 
 
