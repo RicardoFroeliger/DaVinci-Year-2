@@ -33,7 +33,6 @@ function showPage(page) {
     document.querySelector('.buttonContainer').style.display = page == 1 ? 'block' : 'none';
     document.querySelector('h1.counter').style.display = page == 1 ? 'inline-block' : 'none';
     document.querySelector('button.back').style.display = page != 0 ? 'inline-block' : 'none';
-    document.querySelector('.impCheckboxContainer').style.display = page == 2 ? 'flex' : 'none';
 }
 showPage(0);
 
@@ -93,16 +92,16 @@ function clickSkipButton() {
 
 function validateAnswers() {
     // Check if there are more than 50% of the statements are answered
-    let enoughAnswers = Object.values(answers).length > Math.floor(subjects.length / 2);
+    let enoughAnswers = Object.values(answers).length >= Math.floor(subjects.length / 2);
 
     // Show error and hide checkboxes if not enough answers
     document.querySelector('.errorContainer').style.display = enoughAnswers ? 'none' : 'block';
-    document.querySelector('.impCheckboxContainer').style.display = enoughAnswers ? 'block' : 'none';
+    document.querySelector('.impCheckboxContainer').style.display = enoughAnswers ? 'flex' : 'none';
 
     // Disable button if not enough answers
     document.querySelector('#importanceButton').disabled = !enoughAnswers;
 
-    if (enoughAnswers) showPage(2);
+    showPage(2);
 }
 
 
