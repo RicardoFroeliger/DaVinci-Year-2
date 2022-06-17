@@ -20,9 +20,6 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2">&nbsp;</td>
-            </tr>
-            <tr>
                 <td colspan="2">
                     <h3>Duration: {{ gmdate('i:s', $song->duration) }}</h3>
                     <h3>Song by: {{ $song->artist }}</h3>

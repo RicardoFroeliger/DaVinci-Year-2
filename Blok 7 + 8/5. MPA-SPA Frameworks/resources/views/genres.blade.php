@@ -8,7 +8,7 @@
         <h4 class="m-0">Home</h4>
     </button>
 
-    <h1 class="text-center">Genres</h1>
+    <h1 class="text-center mb-3">Genres</h1>
 
     @foreach ($genres as $genre)
         <h3 class="text-center"><a href="/genre/{{ $genre->id }}">{{ $genre->name }}</a></h3>
