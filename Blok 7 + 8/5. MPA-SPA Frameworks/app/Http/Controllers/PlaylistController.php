@@ -7,14 +7,15 @@ use Illuminate\Http\Request;
 
 class PlaylistController extends Controller
 {
-    public function index(Request $request)
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function index()
     {
         $songs = Song::all();
-        
-        $request->session()->put('key', 'value123');
 
-        $value = $request->session()->get('key');
-
-        return view('playlist', ['songs' => $songs, 'value' => $value]);
+        return view('playlist', ['songs' => $songs]);
     }
 }

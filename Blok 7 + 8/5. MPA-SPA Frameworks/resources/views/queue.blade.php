@@ -9,14 +9,21 @@
     </button>
 
     <h1 class="text-center">Queue</h1>
+    <h3 class="text-center">Total Duration: {{ gmdate('H:i:s', $totalDuration) }}</h3>
 
-    @if ($queue)
+    @if (count($queue))
         @foreach ($queue as $song)
-            <h3 class="text-center"><a href="/song/{{ $song[0]->id }}">
-                    {{ $song[0]->name }} | {{ gmdate('i:s', $song[0]->duration) }} | {{ $song[0]->artist }}
+            <h3 class="text-center"><a href="/song/{{ $song->id }}">
+                    {{ $song->name }} | {{ gmdate('i:s', $song->duration) }} | {{ $song->artist }}
                 </a></h3>
         @endforeach
-    @else 
+    @else
         <h3 class="text-center">Your queue is empty</h3>
     @endif
+
+    <div class="text-center w-100">
+        <button onclick="window.location = '/genres'" class="btn btn-primary">
+            <h4 class="m-0">Add songs</h4>
+        </button>
+    </div>
 @endsection

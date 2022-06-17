@@ -7,22 +7,44 @@ use Illuminate\Http\Request;
 
 class QueueController extends Controller
 {
-    public function index(Request $request) {
-        $queue = $request->session()->get('queue.songs');
+    public function index(Request $request)
+    {
+        $queue = $request->session()->get('queue', []);
 
-        return view('queue', ['queue' => $queue]);
+        $queue = Song::whereIn('id', $queue)->get();
+
+        $totalDuration = 0;
+        foreach ($queue as $song) {
+            $totalDuration += $song->duration;
+        }
+
+        return view('queue', ['queue' => $queue, 'totalDuration' => $totalDuration]);
     }
 
-    public function create() {
+    public function create()
+    {
         return abort(404);
     }
 
-    public function store(Request $request) {
-        // $request->session()->put('queue.songs', []);
+    public function store(Request $request)
+    {
+        $songId = $request->all()['songId'];
 
-        $song = Song::where('id', '=', $request->all()['songId'])->get();
+        $request->session()->push('queue', $songId);
 
-        $request->session()->push('queue.songs', $song);
+        return redirect('/queue');
+    }
+
+    public function remove(Request $request)
+    {
+        $songId = $request->all()['songId'];
+
+        $queue = $request->session()->get('queue', []);
+
+        if (($key = array_search($songId, $queue)) !== false) {
+            unset($queue[$key]);
+        }
+        $request->session()->put('queue', $queue);
 
         return redirect('/queue');
     }

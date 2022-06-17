@@ -1,8 +1,7 @@
 <?php
 
-session_start();
-
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index']);
+Route::get('/home', [App\Http\Controllers\IndexController::class, 'index']);
 
 
 Auth::routes();
@@ -31,6 +31,8 @@ Route::get('/song/{song}', [App\Http\Controllers\SongController::class, 'show'])
 Route::get('/queue', [App\Http\Controllers\QueueController::class, 'index']);
 Route::post('/queue/store', [App\Http\Controllers\QueueController::class, 'store']);
 Route::get('/queue/store', [App\Http\Controllers\QueueController::class, 'create']);
+Route::post('/queue/remove', [App\Http\Controllers\QueueController::class, 'remove']);
+Route::get('/queue/remove', [App\Http\Controllers\QueueController::class, 'create']);
 
 
 Route::get('/playlist', [App\Http\Controllers\PlaylistController::class, 'index']); // not logged in

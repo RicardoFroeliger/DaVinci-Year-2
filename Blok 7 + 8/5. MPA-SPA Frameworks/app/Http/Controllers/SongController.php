@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 
 class SongController extends Controller
 {
-    public function show(Song $song)
+    public function show(Song $song, Request $request)
     {
-        return view('song', ['song' => $song]);
+        $queue = $request->session()->get('queue', []);
+
+        return view('song', ['song' => $song, 'queue' => $queue]);
     }
 }

@@ -45,17 +45,17 @@
                         </td>
                     @endauth
                     <td style="vertical-align: top">
-                        @if ($queue)
+                        @if (count($queue))
                             @foreach ($queue as $song)
-                                <h3 class="text-center"><a href="/song/{{ $song[0]->id }}">
-                                        {{ $song[0]->name }} | {{ gmdate('i:s', $song[0]->duration) }} |
-                                        {{ $song[0]->artist }}
-                                    </a></h3>
+                                <h3 class="text-center">
+                                    <a href="/song/{{ $song->id }}">
+                                        {{ $song->name }} | {{ gmdate('i:s', $song->duration) }} | {{ $song->artist }}
+                                    </a>
+                                </h3>
                             @endforeach
                         @else
                             <h3 class="text-center">Your queue is empty</h3>
                         @endif
-                    </td>
                 </tr>
             </tbody>
         </table>
