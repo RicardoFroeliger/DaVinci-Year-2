@@ -47,11 +47,15 @@ class PlaylistController extends Controller
 
         $playlist->song()->attach($queue);
 
+        $request->session()->forget('queue');
         return redirect('/playlists');
     }
 
-    public function destroy()
+    public function destroy(Playlist $playlist)
     {
+        $playlist->song()->detach($playlist->song);
+        $playlist->delete();
 
+        return redirect('/playlists');
     }
 }

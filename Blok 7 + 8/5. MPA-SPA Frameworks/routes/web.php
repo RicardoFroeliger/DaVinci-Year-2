@@ -39,5 +39,5 @@ Route::get('/playlists', [App\Http\Controllers\PlaylistController::class, 'index
 Route::get('/playlist/{playlist}', [App\Http\Controllers\PlaylistController::class, 'show']);
 Route::post('/playlist/store', [App\Http\Controllers\PlaylistController::class, 'store']);
 Route::get('/playlist/store', fn() => abort(404));
-Route::post('/playlist/destroy', [App\Http\Controllers\PlaylistController::class, 'destroy']);
-Route::get('/playlist/destroy', fn() => abort(404));
+Route::post('/playlist/{playlist}/destroy', [App\Http\Controllers\PlaylistController::class, 'destroy']);
+Route::get('/playlist/{playlist}/destroy', fn() => abort(404));
