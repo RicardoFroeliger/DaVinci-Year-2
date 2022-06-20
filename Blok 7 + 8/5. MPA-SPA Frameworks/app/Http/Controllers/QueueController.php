@@ -21,11 +21,6 @@ class QueueController extends Controller
         return view('queue', ['queue' => $queue, 'totalDuration' => $totalDuration]);
     }
 
-    public function create()
-    {
-        return abort(404);
-    }
-
     public function store(Request $request)
     {
         $songId = $request->all()['songId'];
@@ -35,7 +30,7 @@ class QueueController extends Controller
         return redirect('/queue');
     }
 
-    public function remove(Request $request)
+    public function destroy(Request $request)
     {
         $songId = $request->all()['songId'];
 

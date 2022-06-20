@@ -30,11 +30,14 @@ Route::get('/song/{song}', [App\Http\Controllers\SongController::class, 'show'])
 
 Route::get('/queue', [App\Http\Controllers\QueueController::class, 'index']);
 Route::post('/queue/store', [App\Http\Controllers\QueueController::class, 'store']);
-Route::get('/queue/store', [App\Http\Controllers\QueueController::class, 'create']);
-Route::post('/queue/remove', [App\Http\Controllers\QueueController::class, 'remove']);
-Route::get('/queue/remove', [App\Http\Controllers\QueueController::class, 'create']);
+Route::get('/queue/store', abort(404));
+Route::post('/queue/destroy', [App\Http\Controllers\QueueController::class, 'destroy']);
+Route::get('/queue/destroy', abort(404));
 
 
-Route::get('/playlist', [App\Http\Controllers\PlaylistController::class, 'index']); // not logged in
-// Route::get('/playlists', [App\Http\Controllers\PlaylistController::class, 'index']); // logged in
-// Route::get('/playlist/{playlist}', [App\Http\Controllers\PlaylistController::class, 'show']); // logged in
+Route::get('/playlists', [App\Http\Controllers\PlaylistController::class, 'index']);
+Route::get('/playlist/{playlist}', [App\Http\Controllers\PlaylistController::class, 'show']);
+Route::post('/playlist/store', [App\Http\Controllers\PlaylistController::class, 'store']);
+Route::get('/playlist/store', abort(404));
+Route::post('/playlist/destroy', [App\Http\Controllers\PlaylistController::class, 'destroy']);
+Route::get('/playlist/destroy', abort(404));

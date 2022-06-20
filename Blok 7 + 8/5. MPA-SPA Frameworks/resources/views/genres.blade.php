@@ -8,6 +8,7 @@
         <h4 class="m-0">Home</h4>
     </button>
 
+    
     <h1 class="text-center mb-3">Genres</h1>
 
     @foreach ($genres as $genre)

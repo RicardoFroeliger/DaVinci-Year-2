@@ -32,19 +32,24 @@
                             @csrf
                             <button type="submit" name="songId" value="{{ $song->id }}"
                                 class="btn btn-danger mb-2 d-block" style="float: right;"
-                                onclick='return confirm(`Are you sure you want to remove "{{ $song->name }}" from your queue?`)'>Remove
-                                from queue</button>
+                                onclick='return confirm(`Are you sure you want to remove "{{ $song->name }}" from your queue?`)'>
+                                <h4 class="m-0">Remove from queue</h4>
+                            </button>
                         </form>
                     @else
                         <form action="/queue/store" method="POST">
                             @csrf
                             <button type="submit" name="songId" value="{{ $song->id }}"
-                                class="btn btn-secondary mb-2 d-block" style="float: right;">Add to queue</button>
+                                class="btn btn-secondary mb-2 d-block" style="float: right;">
+                                <h4 class="m-0">Add to queue</h4>
+                            </button>
                         </form>
                     @endif
                 </td>
                 <td>
-                    <button class="btn btn-primary mb-2 d-block">Manage playlists</button>
+                    <button class="btn btn-primary mb-2 d-block">
+                        <h4 class="m-0">Manage playlists</h4>
+                    </button>
                 </td>
             </tr>
         </tbody>
