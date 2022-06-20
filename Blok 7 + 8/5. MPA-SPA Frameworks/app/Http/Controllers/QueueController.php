@@ -10,13 +10,10 @@ class QueueController extends Controller
     public function index(Request $request)
     {
         $queue = $request->session()->get('queue', []);
-
         $queue = Song::whereIn('id', $queue)->get();
 
         $totalDuration = 0;
-        foreach ($queue as $song) {
-            $totalDuration += $song->duration;
-        }
+        foreach ($queue as $song) $totalDuration += $song->duration;
 
         return view('queue', ['queue' => $queue, 'totalDuration' => $totalDuration]);
     }

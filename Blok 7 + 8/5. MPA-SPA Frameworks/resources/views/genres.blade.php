@@ -9,9 +9,9 @@
     </button>
 
     
-    <h1 class="text-center mb-3">Genres</h1>
+    <h2 class="text-center mb-3">Genres</h2>
 
     @foreach ($genres as $genre)
-        <h3 class="text-center"><a href="/genre/{{ $genre->id }}">{{ $genre->name }}</a></h3>
+        <h4 class="text-center"><a href="/genre/{{ $genre->id }}">{{ $genre->name }}</a></h4>
     @endforeach
 @endsection

@@ -9,13 +9,13 @@
     </button>
 
 
-    <h1 class="text-center">{{ $genre->name }}</h1>
+    <h2 class="text-center">{{ $genre->name }}</h2>
 
     @foreach ($songs as $song)
-        <h3 class="text-center">
+        <h4 class="text-center">
             <a href="/song/{{ $song->id }}">
                 {{ $song->name }} | {{ gmdate('i:s', $song->duration) }} | {{ $song->artist }}
             </a>
-        </h3>
+        </h4>
     @endforeach
 @endsection

@@ -9,18 +9,18 @@
     </button>
 
 
-    <h1 class="text-center mb-3">Playlists</h1>
+    <h2 class="text-center mb-3">Playlists</h2>
 
     @if (count($playlists))
         @foreach ($playlists as $playlist)
-            <h3 class="text-center">
+            <h4 class="text-center">
                 <a href="/playlist/{{ $playlist->id }}">
                     {{ $playlist->name }} | {{ gmdate('H:i:s', $playlist->total_duration) }}
                 </a>
-            </h3>
+            </h4>
         @endforeach
     @else
-        <h3 class="text-center">You have no playlists</h3>
+        <h4 class="text-center">You have no playlists</h4>
         <p class="text-center">
             To create a playlist, add songs to your queue and then save the queue as playlist.
         </p>

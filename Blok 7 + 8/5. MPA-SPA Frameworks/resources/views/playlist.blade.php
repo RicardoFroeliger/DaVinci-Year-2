@@ -9,16 +9,16 @@
     </button>
 
 
-    <h1 class="text-center">{{ $playlist->name }}</h1>
-    <h3 class="text-center mb-3 m-0">Total Duration:
-        {{ gmdate('H:i:s', $playlist->total_duration) }}</h3>
+    <h2 class="text-center">{{ $playlist->name }}</h2>
+    <h4 class="text-center mb-3 m-0">Total Duration:
+        {{ gmdate('H:i:s', $playlist->total_duration) }}</h4>
 
     @foreach ($songs as $song)
-        <h3 class="text-center">
+        <h4 class="text-center">
             <a href="/song/{{ $song->id }}">
                 {{ $song->name }} | {{ gmdate('i:s', $song->duration) }} | {{ $song->artist }}
             </a>
-        </h3>
+        </h4>
     @endforeach
 
 @endsection

@@ -9,11 +9,11 @@
     </button>
 
 
-    <h1 class="text-center">Queue</h1>
+    <h2 class="text-center">Queue</h2>
 
     <div class="text-center w-100 mb-3">
-        <h3 class="m-0 d-inline-block text-center" style="vertical-align: middle">Total Duration:
-            {{ gmdate('H:i:s', $totalDuration) }}</h3>
+        <h4 class="m-0 d-inline-block text-center" style="vertical-align: middle">Total Duration:
+            {{ gmdate('H:i:s', $totalDuration) }}</h4>
 
         @if (count($queue))
             <form action="/playlist/store" method="POST" class="ms-3 d-inline-block">
@@ -28,14 +28,14 @@
 
     @if (count($queue))
         @foreach ($queue as $song)
-            <h3 class="text-center">
+            <h4 class="text-center">
                 <a href="/song/{{ $song->id }}">
                     {{ $song->name }} | {{ gmdate('i:s', $song->duration) }} | {{ $song->artist }}
                 </a>
-            </h3>
+            </h4>
         @endforeach
     @else
-        <h3 class="text-center">Your queue is empty</h3>
+        <h4 class="text-center">Your queue is empty</h4>
     @endif
 
 
