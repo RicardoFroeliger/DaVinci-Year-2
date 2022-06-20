@@ -14,7 +14,7 @@ class SongFactory extends Factory
     public function definition()
     {
         return [
-            'genreId' => $this->faker->numberBetween(1, 15),
+            'genre_id' => $this->faker->numberBetween(1, 15),
             'name' => $this->faker->word(),
             'artist' => $this->faker->name(),
             'duration' => $this->faker->numberBetween(90, 300)

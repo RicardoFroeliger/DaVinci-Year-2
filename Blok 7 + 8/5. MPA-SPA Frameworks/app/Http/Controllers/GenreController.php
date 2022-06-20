@@ -17,7 +17,7 @@ class GenreController extends Controller
 
     public function show(Genre $genre)
     {
-        $songs = Song::where('genreId', '=', $genre->id)->get();
+        $songs = Song::where('genre_id', '=', $genre->id)->get();
 
         return view('genre', ['genre' => $genre, 'songs' => $songs]);
     }
