@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Genre;
+use App\Models\Playlist;
 use App\Models\Song;
 use Illuminate\Http\Request;
 
@@ -13,6 +14,10 @@ class IndexController extends Controller
         $genres = Genre::all();
         $queue = $request->session()->get('queue', []);
 
-        return view('index', ['genres' => $genres, 'queue' => Song::find($queue)]);
+        return view('index', [
+            'genres' => $genres, 
+            'queue' => Song::find($queue),
+            'playlists' => Playlist::all()
+        ]);
     }
 }
