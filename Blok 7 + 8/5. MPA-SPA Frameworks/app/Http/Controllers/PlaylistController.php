@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Playlist;
 use App\Models\Song;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class PlaylistController extends Controller
@@ -15,13 +17,15 @@ class PlaylistController extends Controller
 
     public function index()
     {
-        $playlists = Playlist::all();
+        $playlists = Auth::user() ? Playlist::where('user_id', '=', Auth::user()->id)->get() : []; 
 
         return view('playlists', ['playlists' => $playlists]);
     }
 
     public function show(Playlist $playlist)
     {
+        if($playlist->user_id != Auth::user()->id) abort(403);
+
         $songs = $playlist->song;
 
         return view('playlist', ['playlist' => $playlist, 'songs' => $songs]);
@@ -30,13 +34,13 @@ class PlaylistController extends Controller
     public function store(Request $request)
     {
         $queue = $request->session()->get('queue', []);
-
         $queue = Song::whereIn('id', $queue)->get();
 
         $totalDuration = 0;
         foreach ($queue as $song) $totalDuration += $song->duration;
 
         $playlist = new Playlist();
+        $playlist->user_id = Auth::user()->id;
         $playlist->name = 'test';
         $playlist->total_duration = $totalDuration;
         $playlist->save();
