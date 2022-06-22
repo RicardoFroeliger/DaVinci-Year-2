@@ -8,6 +8,14 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
+function sanitize($data)
+{
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
 class PlaylistController extends Controller
 {
     public function __construct()
@@ -17,14 +25,14 @@ class PlaylistController extends Controller
 
     public function index()
     {
-        $playlists = Auth::user() ? Playlist::where('user_id', '=', Auth::user()->id)->get() : []; 
+        $playlists = Auth::user() ? Playlist::where('user_id', '=', Auth::user()->id)->get() : [];
 
         return view('playlists', ['playlists' => $playlists]);
     }
 
     public function show(Playlist $playlist)
     {
-        if($playlist->user_id != Auth::user()->id) abort(403);
+        if ($playlist->user_id != Auth::user()->id) abort(403);
 
         $songs = $playlist->song;
 
@@ -33,16 +41,9 @@ class PlaylistController extends Controller
 
     public function store(Request $request)
     {
-        function sanitize($data) {
-            $data = trim($data);
-            $data = stripslashes($data);
-            $data = htmlspecialchars($data);
-            return $data;
-        }
+        $playlistName = sanitize(request('playlistName'));
+        if (empty($playlistName) || strlen($playlistName) > 50) return redirect('/queue');
 
-        $playlistName = sanitize(request('name'));
-        if(empty($playlistName)) return redirect('/queue');
-        
         $queue = $request->session()->get('queue', []);
         $queue = Song::whereIn('id', $queue)->get();
 
@@ -58,7 +59,19 @@ class PlaylistController extends Controller
         $playlist->song()->attach($queue);
 
         $request->session()->forget('queue');
-        return redirect('/playlists');
+        return redirect('/playlist/'.$playlist->id);
+    }
+
+    public function update(Playlist $playlist)
+    {
+        $playlistName = sanitize(request('playlistName'));
+
+        if (!empty($playlistName && strlen($playlistName) <= 50)) {
+            $playlist->name = $playlistName;
+            $playlist->save();
+        }
+
+        return redirect('/playlist/'.$playlist->id);
     }
 
     public function destroy(Playlist $playlist)

@@ -30,14 +30,22 @@ Route::get('/song/{song}', [App\Http\Controllers\SongController::class, 'show'])
 
 Route::get('/queue', [App\Http\Controllers\QueueController::class, 'index']);
 Route::post('/queue/store', [App\Http\Controllers\QueueController::class, 'store']);
-Route::get('/queue/store', fn() => abort(404));
 Route::post('/queue/destroy', [App\Http\Controllers\QueueController::class, 'destroy']);
+
+Route::get('/queue/store', fn() => abort(404));
 Route::get('/queue/destroy', fn() => abort(404));
 
 
 Route::get('/playlists', [App\Http\Controllers\PlaylistController::class, 'index']);
 Route::get('/playlist/{playlist}', [App\Http\Controllers\PlaylistController::class, 'show']);
 Route::post('/playlist/store', [App\Http\Controllers\PlaylistController::class, 'store']);
-Route::get('/playlist/store', fn() => abort(404));
+Route::post('/playlist/{playlist}/update', [App\Http\Controllers\PlaylistController::class, 'update']);
 Route::post('/playlist/{playlist}/destroy', [App\Http\Controllers\PlaylistController::class, 'destroy']);
+
+Route::get('/playlist/store', fn() => abort(404));
+Route::get('/playlist/{playlist}/update', fn() => abort(404));
 Route::get('/playlist/{playlist}/destroy', fn() => abort(404));
+
+
+Route::get('/playlist/{playlist}/song/store');
+Route::get('/playlist/{playlist}/song/{song}/destroy');

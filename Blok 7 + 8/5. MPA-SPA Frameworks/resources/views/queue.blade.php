@@ -56,9 +56,8 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="formInput1">Playlist name</label>
-                                <input type="text" name="name" class="form-control mb-3" id="formInput1"
-                                    placeholder="Playlist 1">
+                                <label for="playlistName">Playlist name</label>
+                                <input type="text" name="playlistName" class="form-control mb-3" id="playlistName" placeholder="Playlist 1">
                             </div>
                         </div>
                         <div class="modal-footer">
