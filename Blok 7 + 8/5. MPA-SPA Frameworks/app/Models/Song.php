@@ -9,8 +9,8 @@ class Song extends Model
 {
     use HasFactory;
 
-    public function playlist() 
+    public function playlists() 
     {
-        $this->belongsToMany(Playlist::class)->withTimestamps();
+        return $this->belongsToMany(Playlist::class)->withTimestamps();
     }
 }

@@ -34,7 +34,7 @@ class PlaylistController extends Controller
     {
         if ($playlist->user_id != Auth::user()->id) abort(403);
 
-        $songs = $playlist->song;
+        $songs = $playlist->songs;
 
         return view('playlist', ['playlist' => $playlist, 'songs' => $songs]);
     }
@@ -56,7 +56,7 @@ class PlaylistController extends Controller
         $playlist->total_duration = $totalDuration;
         $playlist->save();
 
-        $playlist->song()->attach($queue);
+        $playlist->songs()->attach($queue);
 
         $request->session()->forget('queue');
         return redirect('/playlist/'.$playlist->id);
@@ -76,7 +76,7 @@ class PlaylistController extends Controller
 
     public function destroy(Playlist $playlist)
     {
-        $playlist->song()->detach($playlist->song);
+        $playlist->songs()->detach($playlist->songs);
         $playlist->delete();
 
         return redirect('/playlists');
