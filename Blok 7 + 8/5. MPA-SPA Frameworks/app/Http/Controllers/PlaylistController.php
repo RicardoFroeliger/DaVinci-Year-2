@@ -33,6 +33,16 @@ class PlaylistController extends Controller
 
     public function store(Request $request)
     {
+        function sanitize($data) {
+            $data = trim($data);
+            $data = stripslashes($data);
+            $data = htmlspecialchars($data);
+            return $data;
+        }
+
+        $playlistName = sanitize(request('name'));
+        if(empty($playlistName)) return redirect('/queue');
+        
         $queue = $request->session()->get('queue', []);
         $queue = Song::whereIn('id', $queue)->get();
 
@@ -41,7 +51,7 @@ class PlaylistController extends Controller
 
         $playlist = new Playlist();
         $playlist->user_id = Auth::user()->id;
-        $playlist->name = 'test';
+        $playlist->name = $playlistName;
         $playlist->total_duration = $totalDuration;
         $playlist->save();
 
