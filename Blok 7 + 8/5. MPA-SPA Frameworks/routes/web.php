@@ -41,11 +41,11 @@ Route::get('/playlist/{playlist}', [App\Http\Controllers\PlaylistController::cla
 Route::post('/playlist/store', [App\Http\Controllers\PlaylistController::class, 'store']);
 Route::post('/playlist/{playlist}/update', [App\Http\Controllers\PlaylistController::class, 'update']);
 Route::post('/playlist/{playlist}/destroy', [App\Http\Controllers\PlaylistController::class, 'destroy']);
+Route::post('/playlist_song/{song}/store', [App\Http\Controllers\Playlist_SongController::class, 'store']);
+Route::post('/playlist_song/{song}/destroy', [App\Http\Controllers\Playlist_SongController::class, 'destroy']);
 
 Route::get('/playlist/store', fn() => abort(404));
 Route::get('/playlist/{playlist}/update', fn() => abort(404));
 Route::get('/playlist/{playlist}/destroy', fn() => abort(404));
-
-
-Route::get('/playlist/{playlist}/song/store');
-Route::get('/playlist/{playlist}/song/{song}/destroy');
+Route::get('/playlist_song/{song}/store', fn() => abort(404));
+Route::get('/playlist_song/{song}/destroy', fn() => abort(404));

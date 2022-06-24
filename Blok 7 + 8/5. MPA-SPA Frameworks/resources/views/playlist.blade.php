@@ -15,7 +15,7 @@
         <h4 class="m-0 d-inline-block text-center" style="vertical-align: middle">Total Duration:
             {{ gmdate('H:i:s', $playlist->total_duration) }}</h4>
 
-        <button type="submit" class="btn btn-primary ms-3" data-toggle="modal" id="managePlaylistButton"
+        <button type="submit" class="btn btn-secondary ms-3" data-toggle="modal" id="managePlaylistButton"
             data-target="#managePlaylistModal">
             <h4 class="m-0">Manage</h4>
         </button>
@@ -30,6 +30,13 @@
             <a href="/playlist/">X</a>
         </h4>
     @endforeach
+
+
+    <div class="text-center w-100 mt-3">
+        <button onclick="window.location = '/genres'" class="btn btn-primary">
+            <h4 class="m-0">Add songs</h4>
+        </button>
+    </div>
 
 
     <div class="modal fade" id="managePlaylistModal" tabindex="-1" aria-hidden="true">

@@ -14,6 +14,8 @@ class SongController extends Controller
 
         $inPlaylists = Song::where('id', '=', $song->id)->with('playlists')->first()->playlists;
 
+        // Playlist::where('user_id', '=', Auth::user()->id)
+
         $notInPlaylists = Playlist::whereNotIn('id', array_map(fn($x) => $x->id, [...$inPlaylists]))->get();
 
         return view('song', [

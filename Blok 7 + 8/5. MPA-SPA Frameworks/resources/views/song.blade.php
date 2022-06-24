@@ -34,14 +34,13 @@
     @endif
 
 
-    <button type="submit" class="mx-auto btn btn-secondary mb-2 d-block" data-toggle="modal" id="managePlaylistSongsButton"
-        data-target="#managePlaylistSongsModal">
-        <h4 class="m-0">Manage playlists</h4>
-    </button>
+    @auth
+        <button type="submit" class="mx-auto btn btn-secondary mb-2 d-block" data-toggle="modal" id="managePlaylistSongsButton"
+            data-target="#managePlaylistSongsModal">
+            <h4 class="m-0">Manage playlists</h4>
+        </button>
+    @endauth
 
-    {{-- Make a radio to delete or add song if both is possible
-        
-        then make a list of checkboxes which playlist gotta be edited --}}
 
     <div class="modal fade" id="managePlaylistSongsModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -84,16 +83,16 @@
                         <h5 class="m-0">Close</h5>
                     </button>
 
-                    <form method="POST" id="playlistAddSong" action="/playlist/{{ $playlist->id }}/song/store">
+                    <form method="POST" id="playlistAddSong" action="/playlist_song/{{ $song->id }}/store">
                         @csrf
                         <button type="submit" class="btn btn-primary">
                             <h5 class="m-0">Add song</h5>
                         </button>
                     </form>
 
-                    <form method="POST" id="playlistRemoveSong" action="/playlist/{{ $playlist->id }}/song/{{ $song->id }}/destroy" style="display: none">
+                    <form method="POST" id="playlistRemoveSong" action="/playlist_song/{{ $song->id }}/destroy" style="display: none">
                         @csrf
-                        <button type="submit" class="btn btn-danger" onclick='return confirm(`Are you sure you want to remove "{{ $song->name }}" from playlist: "{{ $playlist->name }}"?`)'>
+                        <button type="submit" class="btn btn-danger" onclick='return confirm(`Are you sure you want to remove "{{ $song->name }}" from this playlist?`)'>
                             <h5 class="m-0">Remove song</h5>
                         </button>
                     </form>
