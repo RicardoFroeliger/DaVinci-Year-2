@@ -7,22 +7,22 @@ use Illuminate\Http\Request;
 
 class QueueController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $queue = $request->session()->get('queue', []);
-        $queue = Song::whereIn('id', $queue)->get();
+        $queue = (new SessionManager)->getQueue();
+        $queueDuration = (new SessionManager)->getQueueDuration();
 
-        $totalDuration = 0;
-        foreach ($queue as $song) $totalDuration += $song->duration;
-
-        return view('queue', ['queue' => $queue, 'totalDuration' => $totalDuration]);
+        return view('queue', [
+            'queue' => $queue,
+            'queueDuration' => $queueDuration
+        ]);
     }
 
     public function store(Request $request)
     {
         $songId = $request->all()['songId'];
 
-        $request->session()->push('queue', $songId);
+        (new SessionManager)->pushQueueSong($songId);
 
         return redirect('/queue');
     }
@@ -31,12 +31,7 @@ class QueueController extends Controller
     {
         $songId = $request->all()['songId'];
 
-        $queue = $request->session()->get('queue', []);
-
-        if (($key = array_search($songId, $queue)) !== false) {
-            unset($queue[$key]);
-        }
-        $request->session()->put('queue', $queue);
+        (new SessionManager)->spliceQueueSong($songId);
 
         return redirect('/queue');
     }

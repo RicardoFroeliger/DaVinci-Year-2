@@ -16,7 +16,7 @@
     <h4 class="text-center mb-3">Song by: {{ $song->artist }}</h4>
 
 
-    @if (!in_array($song->id, $queue))
+    @if (!in_array($song->id, $queueIds))
         <form action="/queue/store" method="POST">
             @csrf
             <button type="submit" name="songId" value="{{ $song->id }}" class="mx-auto btn btn-primary mb-2 d-block">

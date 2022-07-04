@@ -27,7 +27,9 @@ class PlaylistController extends Controller
     {
         $playlists = Auth::user() ? Playlist::where('user_id', '=', Auth::user()->id)->get() : [];
 
-        return view('playlists', ['playlists' => $playlists]);
+        return view('playlists', [
+            'playlists' => $playlists
+        ]);
     }
 
     public function show(Playlist $playlist)
@@ -39,27 +41,24 @@ class PlaylistController extends Controller
         return view('playlist', ['playlist' => $playlist, 'songs' => $songs]);
     }
 
-    public function store(Request $request)
+    public function store()
     {
         $playlistName = sanitize(request('playlistName'));
         if (empty($playlistName) || strlen($playlistName) > 50) return redirect('/queue');
 
-        $queue = $request->session()->get('queue', []);
-        $queue = Song::whereIn('id', $queue)->get();
-
-        $totalDuration = 0;
-        foreach ($queue as $song) $totalDuration += $song->duration;
+        $queueIds = (new SessionManager)->getQueueIds();
+        $queueDuration = (new SessionManager)->getQueueDuration();
 
         $playlist = new Playlist();
         $playlist->user_id = Auth::user()->id;
         $playlist->name = $playlistName;
-        $playlist->total_duration = $totalDuration;
+        $playlist->total_duration = $queueDuration;
         $playlist->save();
 
-        $playlist->songs()->attach($queue);
+        $playlist->songs()->attach($queueIds);
 
-        $request->session()->forget('queue');
-        return redirect('/playlist/'.$playlist->id);
+        (new SessionManager)->forgetQueue();
+        return redirect('/playlist/' . $playlist->id);
     }
 
     public function update(Playlist $playlist)
@@ -71,7 +70,7 @@ class PlaylistController extends Controller
             $playlist->save();
         }
 
-        return redirect('/playlist/'.$playlist->id);
+        return redirect('/playlist/' . $playlist->id);
     }
 
     public function destroy(Playlist $playlist)

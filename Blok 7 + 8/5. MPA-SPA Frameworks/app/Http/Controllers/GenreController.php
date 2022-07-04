@@ -12,13 +12,18 @@ class GenreController extends Controller
     {
         $genres = Genre::all();
 
-        return view('genres', ['genres' => $genres]);
+        return view('genres', [
+            'genres' => $genres
+        ]);
     }
 
     public function show(Genre $genre)
     {
         $songs = Song::where('genre_id', '=', $genre->id)->get();
 
-        return view('genre', ['genre' => $genre, 'songs' => $songs]);
+        return view('genre', [
+            'genre' => $genre,
+            'songs' => $songs
+        ]);
     }
 }

@@ -25,19 +25,17 @@ class Playlist_SongController extends Controller
     {
         $playlistId = intval(sanitize(request('songAddPlaylistsSelect')));
         $playlist = Playlist::where('id', $playlistId)->with('songs')->first();
-        
-        if($playlist) {
+
+        if ($playlist) {
             $playlist->songs()->attach($song);
 
             $playlist = Playlist::where('id', $playlistId)->with('songs')->first();
-    
-            $totalDuration = 0;
-            foreach ($playlist->songs as $song) $totalDuration += $song->duration;
+            $playlistDuration = array_reduce([...$playlist->songs], fn ($total, $song) => $total += $song->duration, 0);
 
-            $playlist->total_duration = $totalDuration;
+            $playlist->total_duration = $playlistDuration;
             $playlist->save();
 
-            return redirect('/playlist/'.$playlist->id);
+            return redirect('/playlist/' . $playlist->id);
         }
 
         return redirect('/playlists');
@@ -47,19 +45,17 @@ class Playlist_SongController extends Controller
     {
         $playlistId = intval(sanitize(request('songRemovePlaylistsSelect')));
         $playlist = Playlist::where('id', $playlistId)->with('songs')->first();
-        
-        if($playlist) {
+
+        if ($playlist) {
             $playlist->songs()->detach($song);
 
             $playlist = Playlist::where('id', $playlistId)->with('songs')->first();
-    
-            $totalDuration = 0;
-            foreach ($playlist->songs as $song) $totalDuration += $song->duration;
+            $playlistDuration = array_reduce([...$playlist->songs], fn ($total, $song) => $total += $song->duration, 0);
 
-            $playlist->total_duration = $totalDuration;
+            $playlist->total_duration = $playlistDuration;
             $playlist->save();
 
-            return redirect('/playlist/'.$playlist->id);
+            return redirect('/playlist/' . $playlist->id);
         }
 
         return redirect('/playlists');

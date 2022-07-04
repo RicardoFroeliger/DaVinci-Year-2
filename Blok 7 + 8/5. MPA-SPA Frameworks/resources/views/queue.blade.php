@@ -13,7 +13,7 @@
 
     <div class="text-center w-100 mb-3">
         <h4 class="m-0 d-inline-block text-center" style="vertical-align: middle">Total Duration:
-            {{ gmdate('H:i:s', $totalDuration) }}</h4>
+            {{ gmdate('H:i:s', $queueDuration) }}</h4>
 
         @if (count($queue))
             <button type="submit" class="btn btn-secondary ms-3" data-toggle="modal" id="saveAsPlaylistButton"
