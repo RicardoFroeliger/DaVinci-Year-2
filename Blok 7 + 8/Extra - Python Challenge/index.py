@@ -2,15 +2,15 @@ import re
 import math
 import os
 
-input = ''
+inputFile = ''
 word = ''
 
 with open('input.txt') as f:
-    input = f.read()
+    inputFile = f.read()
 
-input = re.findall(r"\{\{\[\!([0-9]+)\!\]\}\}", input)
+inputFile = re.findall(r"\{\{\[\!([0-9]+)\!\]\}\}", inputFile)
 
-for match in input: 
+for match in inputFile: 
     num = int(match)
     sqrtNum = math.sqrt(num)
 
@@ -19,4 +19,6 @@ for match in input:
         word += letter
 
 os.system('cls')
-print(word)
+print(f'The word is: {word}')
+
+input('Press enter to exit') 
