@@ -8,14 +8,14 @@ use Illuminate\Support\Facades\Session;
 
 class SessionManager
 {
-    public function getQueueIds()
+    static public function getQueueIds()
     {
         $sessionQueue = Session::get('queue', []);
 
         return array_map(fn ($s) => $s[1], $sessionQueue);
     }
 
-    public function getQueue()
+    static public function getQueue()
     {
         $sessionQueue = Session::get('queue', []);
         $queue = Song::find(array_map(fn ($s) => $s[1], $sessionQueue));
@@ -25,38 +25,36 @@ class SessionManager
         foreach ($sessionQueue as $queueSong) {
             $song = array_filter([...$queue], fn ($s) => $s->id == $queueSong[1]);
 
-            array_push($tempQueue, [...$song][0]);
+            if($song) array_push($tempQueue, [...$song][0]);
         }
 
         return collect($tempQueue);
     }
 
-    public function getQueueDuration()
+    static public function getQueueDuration()
     {
-        $queue = $this->getQueue();
+        $queue = SessionManager::getQueue();
 
         return array_reduce([...$queue], fn ($total, $song) => $total += $song->duration, 0);
     }
 
-    public function pushQueueSong($songId)
+    static public function pushQueueSong($songId)
     {
-        $position = count($this->getQueueIds());
+        $position = count(SessionManager::getQueueIds());
 
         Session::push('queue', [$position, $songId]);
     }
 
-    public function spliceQueueSong($songId)
+    static public function spliceQueueSong($songId)
     {
-        $queue = $this->getQueueIds();
+        $queue = SessionManager::getQueueIds();
 
-        if (($key = array_search($songId, $queue)) !== false) {
-            unset($queue[$key]);
-        }
+        if (($key = array_search($songId, $queue)) !== false) unset($queue[$key]);
 
         Session::put('queue', $queue);
     }
 
-    public function forgetQueue()
+    static public function forgetQueue()
     {
         Session::forget('queue');
     }

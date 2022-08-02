@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Song;
 use Illuminate\Http\Request;
 
 class QueueController extends Controller
 {
     public function index()
     {
-        $queue = (new SessionManager)->getQueue();
-        $queueDuration = (new SessionManager)->getQueueDuration();
+        $queue = SessionManager::getQueue();
+        $queueDuration = SessionManager::getQueueDuration();
 
         return view('queue', [
             'queue' => $queue,
@@ -22,7 +21,7 @@ class QueueController extends Controller
     {
         $songId = $request->all()['songId'];
 
-        (new SessionManager)->pushQueueSong($songId);
+        SessionManager::pushQueueSong($songId);
 
         return redirect('/queue');
     }
@@ -31,7 +30,7 @@ class QueueController extends Controller
     {
         $songId = $request->all()['songId'];
 
-        (new SessionManager)->spliceQueueSong($songId);
+        SessionManager::spliceQueueSong($songId);
 
         return redirect('/queue');
     }

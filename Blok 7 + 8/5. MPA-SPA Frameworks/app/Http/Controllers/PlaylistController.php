@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Playlist;
-use App\Models\Song;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -46,8 +44,8 @@ class PlaylistController extends Controller
         $playlistName = sanitize(request('playlistName'));
         if (empty($playlistName) || strlen($playlistName) > 50) return redirect('/queue');
 
-        $queueIds = (new SessionManager)->getQueueIds();
-        $queueDuration = (new SessionManager)->getQueueDuration();
+        $queueIds = SessionManager::getQueueIds();
+        $queueDuration = SessionManager::getQueueDuration();
 
         $playlist = new Playlist();
         $playlist->user_id = Auth::user()->id;
@@ -57,7 +55,7 @@ class PlaylistController extends Controller
 
         $playlist->songs()->attach($queueIds);
 
-        (new SessionManager)->forgetQueue();
+        SessionManager::forgetQueue();
         return redirect('/playlist/' . $playlist->id);
     }
 
