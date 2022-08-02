@@ -12,6 +12,10 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public function playlists() {
+        return $this->belongsToMany(Playlist::class);
+    } 
+
     /**
      * The attributes that are mass assignable.
      *
